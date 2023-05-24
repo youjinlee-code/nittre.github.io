@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import GlobalStyle from './GlobalStyle'
 import Footer from './Footer'
 import { Helmet } from 'react-helmet'
+import Nav from './Nav'
 
 type TemplateProps = {
   title: string
@@ -54,9 +55,11 @@ const Template: FunctionComponent<TemplateProps> = function ({
         <meta name="twitter:creator" content="@이유진" />
       
         <meta name="google-site-verification" content="d41Ck2f3LnP0_Xf45nyyVlR-LssnymFKygTi8QFqV7A" />
-        
+        <meta name="naver-site-verification" content="2e55aad8a4c9758a4d93c90e1d312cf42f650bdf" />
+
         <html lang="ko" />
       </Helmet>
+      <Nav />
       <GlobalStyle />
       {children}
       <Footer />

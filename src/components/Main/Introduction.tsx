@@ -8,8 +8,7 @@ type IntroductionProps = {
 }
 const Background = styled.div`
   width: 100%;
-  background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);
-  color: #ffffff;
+  color: #000000;
 `
 
 const Wrapper = styled.div`
@@ -17,33 +16,35 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  width: 768px;
-  height: 400px;
-  margin: 0 auto;
+  width: 750px;
+  padding: 1em;
+  margin: 6em auto 0 auto;
+
+  border: 1px solid #aaa;
 
   @media (max-width: 768px){
-    width: 100%;
-    height: 300px;
-    padding: 0 20px;
+    width: 85%;
+    padding: 1em;
+    margin: 8em 2em 0 2em;
   }
 `
 
 const SubTitle = styled.div`
-  font-size: 20px;
+  font-size: 1em;
   font-weight: 400;
 
   @media (max-width: 768px) {
-    font-size: 15px;
+    font-size: 0.8em;
   }
 `
 
 const Title = styled.div`
-  margin-top: 5px;
-  font-size: 35px;
+  margin-bottom: 12px;
+  font-size: 1.3em;
   font-weight: 700;
 
   @media (max-width: 768px) {
-    font-size: 25px;
+    font-size: 1em;
   }
 `
 
@@ -53,12 +54,12 @@ const Introduction: FunctionComponent<IntroductionProps> = function ({
   return (
     <Background>
       <Wrapper>
-        <ProfileImage profileImage={profileImage} />
+        {/* <ProfileImage profileImage={profileImage} /> */}
 
-        <div>
-          <SubTitle>Nice to Meet You,</SubTitle>
-          <Title>I'm Junior Frontend Developer Hyun.</Title>
-        </div>
+        
+          <Title>유진의 하드디스크</Title>
+          <SubTitle>스스로 이해하고, 더 오래 기억하기</SubTitle>
+       
       </Wrapper>
     </Background>
   )
