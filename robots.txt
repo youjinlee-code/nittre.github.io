@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://nittre.github.io/sitemap-index.xml
+Host: https://nittre.github.io
