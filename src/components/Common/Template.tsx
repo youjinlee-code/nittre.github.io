@@ -27,7 +27,14 @@ const Template: FunctionComponent<TemplateProps> = function ({
 }) {
   return (
     <Container>
-      <Helmet>
+      <Helmet 
+        meta={[
+            {
+                name: 'google-site-verification',
+                content: "d41Ck2f3LnP0_Xf45nyyVlR-LssnymFKygTi8QFqV7A"
+            }
+        ]}
+      >
         <meta name="description" content={description} />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta httpEquiv="Content-Type" content="text/html;charset=UTF-8" />
