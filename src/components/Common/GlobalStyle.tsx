@@ -17,6 +17,7 @@ const defaultStyle = css`
     body,
     #___gatsby {
         height: 100%;
+        color: rgb(52,58,64);
     }
 
     a, 

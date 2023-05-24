@@ -10,12 +10,13 @@ const NavWrapper = styled.div`
   left: 0px;
   right: 0px;
   padding: 0px 42px;
-  height: 60px;
+  height: 3em;
   display: flex;
   -webkit-box-align: center;
   align-items: center;
   -webkit-box-pack: justify;
   justify-content: space-between;
+  background-color: #ffffffbb;
   
 
   @media (max-width: 768px) {
@@ -23,9 +24,7 @@ const NavWrapper = styled.div`
     padding: 0px 21px;
   }
 
-  &:hover {
-    color: #6AB767
-  }
+  
 `
 
 const HomeButton = styled(Link)`
@@ -34,6 +33,9 @@ const HomeButton = styled(Link)`
 
   @media (max-width: 768px) {
     font-size: 1em;
+  }
+  &:hover {
+    color: #6AB767
   }
 `
 

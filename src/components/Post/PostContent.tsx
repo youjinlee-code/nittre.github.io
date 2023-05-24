@@ -11,7 +11,7 @@ display: flex;
 flex-direction: column;
 width: 768px;
 margin: 0 auto;
-padding: 100px 0;
+padding: 4em 0;
 word-break: break-all;
 
 // Markdown Style
@@ -85,7 +85,7 @@ hr + h1,
   // Adjust Code Style
   pre[class*='language-'] {
     margin: 30px 0;
-    padding: 15px;
+    padding: 1.5em;
     font-size: 15px;
 
     ::-webkit-scrollbar-thumb {
@@ -97,11 +97,13 @@ hr + h1,
   code[class*='language-'],
   pre[class*='language-'] {
     tab-size: 2;
+    border-radius: 1em;
+   
   }
   // Markdown Responsive Design
   @media (max-width: 768px) {
     width: 100%;
-    padding: 80px 20px;
+    padding: 2em 1em;
     line-height: 1.6;
     font-size: 14px;
 

@@ -17,7 +17,6 @@ const CategoryListWrapper = styled.div`
 
     @media (max-width: 768px) {
         width: 100%;
-        margin-top: 50px;
         padding: 0 20px;
     }
 `
@@ -28,6 +27,7 @@ const CategoryItem = styled(({ active, ...props }: GatsbyLinkProps) => (
     margin-right: 20px;
     padding: 5px 0;
     font-weight: ${({ active }) => (active ? '800' : '400')};
+    color: ${({active}) => (active ? '#6AB767' : 'rgb(52, 58, 64)')};
     cursor: pointer;
   
     &:last-of-type {
@@ -36,6 +36,8 @@ const CategoryItem = styled(({ active, ...props }: GatsbyLinkProps) => (
 
     &:hover {
         text-decoration: underline;
+        color: #6AB767;
+
     }
   `
 

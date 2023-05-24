@@ -16,6 +16,7 @@ const PostItemWrapper = styled(Link)`
 
   &:hover {
     background-color: #CCF8B820;
+    color: #000000;
 }
 `
 
@@ -68,7 +69,6 @@ const Category = styled.div`
 
 const CategoryItem = styled.div`
   margin: 2.5px 5px;
-  padding: 3px 5px;
   font-size: 0.8em;
   font-weight: 400;
 `

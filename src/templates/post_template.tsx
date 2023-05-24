@@ -16,6 +16,7 @@ type PostTemplateProps = {
         href: string
     }
   }
+
 const PostTemplate: FunctionComponent<PostTemplateProps> = function ({
     data: {
       allMarkdownRemark: { edges },
@@ -45,7 +46,9 @@ const PostTemplate: FunctionComponent<PostTemplateProps> = function ({
           date={date}
           categories={categories}
           thumbnail={gatsbyImageData}
+          summary={summary}
         />
+        
         <PostContent html={html} />
         <CommentWidget />
       </Template>
@@ -63,7 +66,7 @@ export const queryMarkdownDataBySlug = graphql`
           frontmatter {
             title
             summary
-            date(formatString: "YYYY.MM.DD.")
+            date(formatString: "YYYY-MM-DD")
             categories
             thumbnail {
               childImageSharp {

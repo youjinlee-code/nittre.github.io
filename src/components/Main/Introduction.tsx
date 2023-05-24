@@ -8,7 +8,6 @@ type IntroductionProps = {
 }
 const Background = styled.div`
   width: 100%;
-  color: #000000;
 `
 
 const Wrapper = styled.div`
@@ -25,7 +24,7 @@ const Wrapper = styled.div`
   @media (max-width: 768px){
     width: 85%;
     padding: 1em;
-    margin: 8em 2em 0 2em;
+    margin: 5em 2em 0 2em;
   }
 `
 
