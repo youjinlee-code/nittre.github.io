@@ -29,15 +29,15 @@ h1,
 h2,
 h3 {
   font-weight: 700;
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
 }
 
 * + h1,
 * + h2 {
-  margin-top: 3em;
+  margin-top: 1.2em;
 }
 * + h3 {
-  margin-top: 1em;
+  margin-top: 1.2em;
 }
 * + h4 {
   margin-top: 0.8em;
@@ -45,21 +45,27 @@ h3 {
 
 
 hr + h1,
-  hr + h2,
-  hr + h3 {
-    margin-top: 0;
-  }
+hr + h2,
+hr + h3 {
+  margin-top: 0;
+}
+
+h1 + h2,
+h2 + h3,
+h3 + h4 {
+  margin-top: 0;
+}
 
   h1 {
     font-size: 2em;
   }
 
   h2 {
-    font-size: 1.5em;
+    font-size: 1.7em;
   }
 
   h3 {
-    font-size: 1.3em;
+    font-size: 1.4em;
   }
 
   h4 {
