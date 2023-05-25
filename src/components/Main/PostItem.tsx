@@ -47,7 +47,7 @@ const Title = styled.div`
   text-overflow: ellipsis;
   white-space: normal;
   overflow-wrap: break-word;
-  -webkit-line-clamp: 2;
+  // -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   font-size: 1.7em;
   font-weight: 700;
