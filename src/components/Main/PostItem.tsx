@@ -87,7 +87,7 @@ const Summary = styled.div`
 `
 
 const PostItem: FunctionComponent<PostItemProps> = function({
-    title, date, categories, summary, thumbnail: {childImageSharp: {gatsbyImageData}}, link
+    title, date, categories, summary, link
 }) {
     return <PostItemWrapper to={link}>
         {/* <ThumbnailImage image={gatsbyImageData} alt="Post Item Image" /> */}

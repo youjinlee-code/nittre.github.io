@@ -9,8 +9,8 @@
  */
 module.exports = {
   siteMetadata: {
-    title: `고랭 하세요`,
-    description: `난.. go가 좋아..`,
+    title: `유진의 하드디스크`,
+    description: `스스로 이해하고, 더 오래 기억하기`,
     author: `@nittre`,
     siteUrl: `https://nittre.github.io/`,
   },
@@ -32,6 +32,7 @@ module.exports = {
         path: `${__dirname}/contents`,
       },
     },
+    `gatsby-transformer-sharp`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -39,14 +40,6 @@ module.exports = {
         path: `${__dirname}/static`,
       },
     },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `post-images`,
-        path: `${__dirname}/src/images`,
-      },
-    },
-
     {
       resolve: `gatsby-plugin-sharp`,
       options: {

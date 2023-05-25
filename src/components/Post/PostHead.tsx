@@ -38,7 +38,6 @@ const PostHeadWrapper = styled.div`
 // `
 
 const PostHead: FunctionComponent<PostHeadProps> = function ({
-  thumbnail,
   title,
   date,
   categories,
