@@ -105,7 +105,7 @@ hr + h1,
     width: 100%;
     padding: 2em 1em;
     line-height: 1.6;
-    font-size: 14px;
+    font-size: 1em;
 
     h1 {
       font-size: 23px;
