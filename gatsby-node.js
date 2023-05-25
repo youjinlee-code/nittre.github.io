@@ -67,6 +67,24 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
                 slug
               }
             }
+            previous {
+              id
+              fields {
+                slug
+              }
+              frontmatter {
+                title
+              }
+            }
+            next {
+              id
+              fields {
+                slug
+              }
+              frontmatter {
+                title
+              }
+            }
           }
         }
       }
@@ -90,11 +108,13 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     node: {
       fields: { slug },
     },
+    previous,
+    next,
   }) => {
     const pageOptions = {
       path: slug,
       component: PostTemplateComponent,
-      context: { slug },
+      context: { slug, previous, next },
     }
 
     createPage(pageOptions)

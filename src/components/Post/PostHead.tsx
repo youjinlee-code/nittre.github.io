@@ -9,9 +9,7 @@ type GatsbyImgProps = {
   className?: string
 }
 
-type PostHeadProps = PostHeadInfoProps & {
-  thumbnail: IGatsbyImageData
-}
+type PostHeadProps = PostHeadInfoProps
 
 const PostHeadWrapper = styled.div`
   position: relative;

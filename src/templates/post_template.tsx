@@ -1,11 +1,20 @@
 import React, {FunctionComponent} from 'react'
 import {graphql} from 'gatsby';
 import Template from '../components/Common/Template';
-import {PostPageItemType} from '../types/PostItem.types'
 import PostHead from '../components/Post/PostHead';
 import PostContent from '../components/Post/PostContent';
 import CommentWidget from '../components/Post/CommentWidget';
+import PostFooter from '../components/Post/PostFooter';
 
+export type FooterArticle = {
+    fields: {
+        slug: string
+    }
+    frontmatter : {
+        title: string
+    }
+    id: string
+} 
 type PostTemplateProps = {
     data: {
       allMarkdownRemark: {
@@ -14,6 +23,10 @@ type PostTemplateProps = {
     }
     location: {
         href: string
+    },
+    pageContext:{
+        previous: FooterArticle | null
+        next: FooterArticle | null
     }
   }
 
@@ -21,7 +34,10 @@ const PostTemplate: FunctionComponent<PostTemplateProps> = function ({
     data: {
       allMarkdownRemark: { edges },
     },
-    location: {href}
+    location: {href},
+    pageContext: {
+        previous, next
+    }
   }) {
     const {
       node: {
@@ -34,7 +50,7 @@ const PostTemplate: FunctionComponent<PostTemplateProps> = function ({
         },
       },
     } = edges[0]
-  
+    
     return (
       <Template title={title} description={summary} url={href}>
         <PostHead
@@ -45,7 +61,10 @@ const PostTemplate: FunctionComponent<PostTemplateProps> = function ({
         />
         
         <PostContent html={html} />
+        <PostFooter previous={previous} next={next} />
+
         <CommentWidget />
+        
       </Template>
     )
   }
@@ -53,7 +72,9 @@ const PostTemplate: FunctionComponent<PostTemplateProps> = function ({
 export default PostTemplate
 
 export const queryMarkdownDataBySlug = graphql`
-  query queryMarkdownDataBySlug($slug: String) {
+  query queryMarkdownDataBySlug(
+    $slug: String
+    ) {
     allMarkdownRemark(filter: { fields: { slug: { eq: $slug } } }) {
       edges {
         node {
@@ -70,6 +91,8 @@ export const queryMarkdownDataBySlug = graphql`
     }
   }
 `
+
+
 
 export type PostPageItemType = {
     node: {
