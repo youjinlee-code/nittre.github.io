@@ -1,0 +1,812 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta name="generator" content="Gatsby 5.10.0"/><meta data-react-helmet="true" name="description" content="UTXO 없이 UTXO를 설명합니다."/><meta data-react-helmet="true" name="viewport" content="width=device-width, initial-scale=1.0"/><meta data-react-helmet="true" http-equiv="Content-Type" content="text/html;charset=UTF-8"/><meta data-react-helmet="true" property="og:type" content="website"/><meta data-react-helmet="true" property="og:title" content="UTXO의 동작원리"/><meta data-react-helmet="true" property="og:description" content="UTXO 없이 UTXO를 설명합니다."/><meta data-react-helmet="true" property="og:url"/><meta data-react-helmet="true" property="og:site_name" content="UTXO의 동작원리"/><meta data-react-helmet="true" name="twitter:card" content="summary"/><meta data-react-helmet="true" name="twitter:title" content="UTXO의 동작원리"/><meta data-react-helmet="true" name="twitter:description" content="UTXO 없이 UTXO를 설명합니다."/><meta data-react-helmet="true" name="twitter:site" content="@이유진"/><meta data-react-helmet="true" name="twitter:creator" content="@이유진"/><meta data-react-helmet="true" name="google-site-verification" content="d41Ck2f3LnP0_Xf45nyyVlR-LssnymFKygTi8QFqV7A"/><meta data-react-helmet="true" name="naver-site-verification" content="2e55aad8a4c9758a4d93c90e1d312cf42f650bdf"/><style data-href="/styles.9e907bc32054b7771552.css" data-identity="gatsby-global-css">code[class*=language-],pre[class*=language-]{word-wrap:normal;background:none;color:#ccc;font-family:Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace;font-size:1em;-webkit-hyphens:none;hyphens:none;line-height:1.5;tab-size:4;text-align:left;white-space:pre;word-break:normal;word-spacing:normal}pre[class*=language-]{margin:.5em 0;overflow:auto;padding:1em}:not(pre)>code[class*=language-],pre[class*=language-]{background:#2d2d2d}:not(pre)>code[class*=language-]{border-radius:.3em;padding:.1em;white-space:normal}.token.block-comment,.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#999}.token.punctuation{color:#ccc}.token.attr-name,.token.deleted,.token.namespace,.token.tag{color:#e2777a}.token.function-name{color:#6196cc}.token.boolean,.token.function,.token.number{color:#f08d49}.token.class-name,.token.constant,.token.property,.token.symbol{color:#f8c555}.token.atrule,.token.builtin,.token.important,.token.keyword,.token.selector{color:#cc99cd}.token.attr-value,.token.char,.token.regex,.token.string,.token.variable{color:#7ec699}.token.entity,.token.operator,.token.url{color:#67cdcc}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}.token.inserted{color:green}</style><style>.gatsby-image-wrapper{position:relative;overflow:hidden}.gatsby-image-wrapper picture.object-fit-polyfill{position:static!important}.gatsby-image-wrapper img{bottom:0;height:100%;left:0;margin:0;max-width:none;padding:0;position:absolute;right:0;top:0;width:100%;object-fit:cover}.gatsby-image-wrapper [data-main-image]{opacity:0;transform:translateZ(0);transition:opacity .25s linear;will-change:opacity}.gatsby-image-wrapper-constrained{display:inline-block;vertical-align:top}</style><noscript><style>.gatsby-image-wrapper noscript [data-main-image]{opacity:1!important}.gatsby-image-wrapper [data-placeholder-image]{opacity:0!important}</style></noscript><script type="module">const e="undefined"!=typeof HTMLImageElement&&"loading"in HTMLImageElement.prototype;e&&document.body.addEventListener("load",(function(e){const t=e.target;if(void 0===t.dataset.mainImage)return;if(void 0===t.dataset.gatsbyImageSsr)return;let a=null,n=t;for(;null===a&&n;)void 0!==n.parentNode.dataset.gatsbyImageWrapper&&(a=n.parentNode),n=n.parentNode;const o=a.querySelector("[data-placeholder-image]"),r=new Image;r.src=t.currentSrc,r.decode().catch((()=>{})).then((()=>{t.style.opacity=1,o&&(o.style.opacity=0,o.style.transition="opacity 500ms linear")}))}),!0);</script><link rel="canonical" href="https://nittre.github.io/utxo/" data-baseprotocol="https:" data-basehost="nittre.github.io"/><link rel="sitemap" type="application/xml" href="/sitemap-index.xml"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><style data-emotion="css zyllbl">.css-zyllbl{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;height:100vh;}</style><main class="css-zyllbl e1strnqo0"><style data-emotion="css 13jjfor">.css-13jjfor{z-index:1000;position:fixed;top:0px;left:0px;right:0px;padding:0px 42px;height:3em;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-webkit-box-pack:justify;-webkit-justify-content:space-between;justify-content:space-between;background-color:#ffffffbb;font-size:1.2em;font-weight:600;}@media (max-width: 768px){.css-13jjfor{font-size:1em;padding:0px 21px;}}</style><div class="css-13jjfor e15l4yeg2"><style data-emotion="css 9gures">.css-9gures:hover{color:#6AB767;}</style><a class="css-9gures e15l4yeg1" href="/">🌿 nittre.github.io</a><style data-emotion="css yyqak6">.css-yyqak6{font-size:1.2em;font-weight:600;}@media (max-width: 768px){.css-yyqak6{font-size:1em;}}.css-yyqak6:hover{color:#6AB767;}</style><a class="css-yyqak6 e15l4yeg0" href="/info/">👋</a></div><style data-emotion="css-global 1prx4uc">*{padding:0;margin:0;box-sizing:border-box;font-family:Pretendard Variable,Apple SD Gothic Neo,Nanum Barun Gothic,Nanum Gothic,Verdana,Arial,Malgun Gothic,Dotum,sans-serif;font-size:1em;}html,body,#___gatsby{height:100%;color:rgb(52,58,64);}a,a:hover{color:inherit;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;}</style><style data-emotion="css 16cz9yp">.css-16cz9yp{position:relative;width:100%;height:400px;}@media (max-width: 768px){.css-16cz9yp{height:300px;}}</style><div class="css-16cz9yp e1opi4mu0"><style data-emotion="css 1509qcf">.css-1509qcf{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;width:768px;height:100%;margin:6em auto 0 auto;}@media (max-width: 768px){.css-1509qcf{width:100%;padding:1em 1em;margin:4em auto 0 auto;}}</style><div class="css-1509qcf e1st1jau3"><style data-emotion="css 5l6g7r">.css-5l6g7r{display:-webkit-box;overflow:hidden;overflow-wrap:break-word;margin-bottom:0.25em;text-overflow:ellipsis;white-space:normal;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-size:2.4em;font-weight:800;}@media (max-width: 768px){.css-5l6g7r{font-size:30px;}}</style><div class="css-5l6g7r e1st1jau2">UTXO의 동작원리</div><div>UTXO 없이 UTXO를 설명합니다.</div><style data-emotion="css lbbxfs">.css-lbbxfs{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;margin-top:10px;font-size:0.9em;font-weight:400;}.css-lbbxfs>div{margin-right:1em;margin-bottom:0.25em;}</style><div class="css-lbbxfs e1st1jau1"><div>2022-09-21</div><div><style data-emotion="css 1sv2bsr">.css-1sv2bsr{margin-right:0.5em;-webkit-text-decoration:underline;text-decoration:underline;cursor:pointer;}.css-1sv2bsr:last-of-type{margin-right:0;}.css-1sv2bsr:hover{color:#6AB767;-webkit-text-decoration:underline;text-decoration:underline;}</style><a class="css-1sv2bsr e1st1jau0" href="/?category=Blockchain">#<!-- -->Blockchain</a></div></div></div></div><style data-emotion="css hwddum">.css-hwddum{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;width:768px;margin:0 auto;padding:4em 0;word-break:break-all;line-height:1.8;font-size:16px;font-weight:400;}.css-hwddum p{padding:3px 0;}.css-hwddum h1,.css-hwddum h2,.css-hwddum h3{font-weight:700;margin-bottom:0.5em;}.css-hwddum *+h1,.css-hwddum *+h2{margin-top:1.2em;}.css-hwddum *+h3{margin-top:1.2em;}.css-hwddum *+h4{margin-top:0.8em;}.css-hwddum hr+h1,.css-hwddum hr+h2,.css-hwddum hr+h3{margin-top:0;}.css-hwddum h1+h2,.css-hwddum h2+h3,.css-hwddum h3+h4{margin-top:0;}.css-hwddum h1{font-size:2em;}.css-hwddum h2{font-size:1.7em;}.css-hwddum h3{font-size:1.4em;}.css-hwddum h4{font-size:1.1em;}.css-hwddum blockquote{margin:30px 0;padding:5px 15px;border-left:2px solid #000000;}.css-hwddum ol,.css-hwddum ul{margin-left:20px;padding:30px 0;}.css-hwddum hr{border:1px solid #000000;margin:100px 0;}.css-hwddum a{color:#4263eb;-webkit-text-decoration:underline;text-decoration:underline;}.css-hwddum pre[class*='language-']{margin:30px 0;padding:1.5em;font-size:15px;}.css-hwddum pre[class*='language-']::-webkit-scrollbar-thumb{background:rgba(255, 255, 255, 0.5);border-radius:3px;}.css-hwddum code[class*='language-'],.css-hwddum pre[class*='language-']{tab-size:2;border-radius:1em;}@media (max-width: 768px){.css-hwddum{width:100%;padding:2em 1em;line-height:1.6;font-size:1em;}.css-hwddum h1{font-size:23px;}.css-hwddum h2{font-size:20px;}.css-hwddum h3{font-size:17px;}.css-hwddum img{width:100%;}.css-hwddum hr{margin:50px 0;}}</style><div class="css-hwddum e1ijh0y10"><h2>UTXO(Unspent Transaction Output)</h2>
+<p>UTXO는 Unspent Transaction Output의 약자로, 비트코인의 소유권을 확인하는 방법입니다.</p>
+<p>UTXO를 직역하면 <strong>아직 소비하지 않은 트랜잭션 출력값</strong>입니다.</p>
+<p>이 글을 읽는 분이라면 아마 블록체인에 대해 어느정도 찾아봤을 것입니다. 그래서 트랜잭션은 거래 내역, 즉 코인의 소유권 변경을 기록한 것이고, 블록에 담겨 네트워크 노드에 전파된다는 것은 알고 있을 것입니다.</p>
+<p>그렇다면 <strong>트랜잭션의 아웃풋</strong>이라는건 무엇일까요?
+그리고 이 아웃풋이 <strong>아직 소비되지 않았다</strong>는 것은 무슨 의미일까요?</p>
+<h2>비트코인에서 송금을 할 때</h2>
+<h3>앨리스가 밥에게 송금을 할 때는 트랜잭션을 기록해야 한다</h3>
+<p>앨리스와 밥의 예시를 들어서 설명해보겠습니다.</p>
+<p>아래 그림과 같이, 앨리스는 10 BTC를 가지고 있으며, 밥에게 6BTC를 보내려고 합니다.</p>
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 765px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/static/efce30b251968666c70e2b63099e1da9/e97d8/utxo_001.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 56.77083333333333%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAsUlEQVR42r2SSw6EIBBEOQ6exBUX9QBwCIN7D2Dijo9hI2pN2oRkRGckYzK14lP9qHTDkGnbNsQYcadPPoZCEaBELC8wxkBKiWVZvoLJp5TCuq7XwHShtUZVVZimaS92zsFai2EY4L3f16S2bcE5Rwjh8NAJ2DQN6rreC9I5pU2gd58QAl3XHc5PPaRkfd/f9myeZ4zjeD8UmhylyYH5nnzUx5+nXCr25Itc+f6T8AnwBZl6Wc7SEmt0AAAAAElFTkSuQmCC'); background-size: cover; display: block;"
+  ></span>
+  <picture>
+          <source
+              srcset="/static/efce30b251968666c70e2b63099e1da9/a59e9/utxo_001.webp 192w,
+/static/efce30b251968666c70e2b63099e1da9/0ca9f/utxo_001.webp 384w,
+/static/efce30b251968666c70e2b63099e1da9/db6df/utxo_001.webp 765w"
+              sizes="(max-width: 765px) 100vw, 765px"
+              type="image/webp"
+            />
+          <source
+            srcset="/static/efce30b251968666c70e2b63099e1da9/3b721/utxo_001.png 192w,
+/static/efce30b251968666c70e2b63099e1da9/66595/utxo_001.png 384w,
+/static/efce30b251968666c70e2b63099e1da9/e97d8/utxo_001.png 765w"
+            sizes="(max-width: 765px) 100vw, 765px"
+            type="image/png"
+          />
+          <img
+            class="gatsby-resp-image-image"
+            src="/static/efce30b251968666c70e2b63099e1da9/e97d8/utxo_001.png"
+            alt="utxo 001"
+            title=""
+            loading="lazy"
+            decoding="async"
+            style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+          />
+        </picture>
+  </a>
+    </span></p>
+<p>송금이라는 것은 곧 앨리스의 소유에 있는 일정량의 비트코인을 다른 계정의 소유로 바꾼다는 것입니다. 비트코인에서는(사실 비트코인 뿐만 아니라 대부분의 블록체인에서는) 이렇게 무언가 변화가 일어날 때 “트랜잭션”이라는 영수증을 작성해 변경사항을 기록합니다.</p>
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 765px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/static/9bc0e15511ea25de0f8cac1201a87164/e97d8/utxo_002.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 56.77083333333333%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA5klEQVR42p1SSRJEQBD0HF7i5I/OHsAjBHcvwMm+LzmRHUE0ejCTEaK7dFVW1qLhhHVdMU0TnvDNT8NLkOANtHNAlmVwXRfzPF/IeMp+nudhWRY14fYQBAEMw0BVVcIuigJlWSJNU9R1jTzPxX/f96HrOpqmOSS9EDqOA9M0RQDRdZ1IYts2oijCMAy7n2VZCMPwEH/pIZUxkBjHUSigwjiOhbq2bfe3JEmeh8LJbWXxzjI3kGSz+cY+/jRlmYA9YrmyfTtl1YrIhKoEKtJbhVwd9q/ve/Hx/pfCc9kcBKfNU95PFeEHcmBUx6Q1NC0AAAAASUVORK5CYII='); background-size: cover; display: block;"
+  ></span>
+  <picture>
+          <source
+              srcset="/static/9bc0e15511ea25de0f8cac1201a87164/a59e9/utxo_002.webp 192w,
+/static/9bc0e15511ea25de0f8cac1201a87164/0ca9f/utxo_002.webp 384w,
+/static/9bc0e15511ea25de0f8cac1201a87164/db6df/utxo_002.webp 765w"
+              sizes="(max-width: 765px) 100vw, 765px"
+              type="image/webp"
+            />
+          <source
+            srcset="/static/9bc0e15511ea25de0f8cac1201a87164/3b721/utxo_002.png 192w,
+/static/9bc0e15511ea25de0f8cac1201a87164/66595/utxo_002.png 384w,
+/static/9bc0e15511ea25de0f8cac1201a87164/e97d8/utxo_002.png 765w"
+            sizes="(max-width: 765px) 100vw, 765px"
+            type="image/png"
+          />
+          <img
+            class="gatsby-resp-image-image"
+            src="/static/9bc0e15511ea25de0f8cac1201a87164/e97d8/utxo_002.png"
+            alt="utxo 002"
+            title=""
+            loading="lazy"
+            decoding="async"
+            style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+          />
+        </picture>
+  </a>
+    </span></p>
+<p>즉, 이 트랜잭션 안에 우리가 일으키고 싶은 변화를 적는 것이죠.</p>
+<p>여기서는 앨리스가 가지고 있는 10 BTC 중 6BTC의 소유권을 밥에게 이전하는 것이 변경사항이 될 것입니다.</p>
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 765px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/static/bef1220ef8b43f179f6b92042b1f5a62/e97d8/utxo_003.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 56.77083333333333%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA+ElEQVR42pVSOa6DQBTjOHASKs5IzwHgDIhADRIFJUvBDmJ15JEmmoR8he+GWfw8fs9o+MB5nti2Db/wF0/DTVDgDrTPgrqu4bou9n2/iPGr8jzPw3Ec3wXlRRiGMAwDfd+Lfdu26LoORVFgGAY0TSPOgyCArusYx/Ht0Yug4zgwTVMUEPM84/F4wLZtxHGMZVlePMuyEEXRW/1lhnSWJIlYr+sqHPCsqirhVjriXZ7nv0NhcrItzpHrNE3h+z6yLHsJksc5/itlFtEVnVCsLMvLzG4JSjLbYhAS6l5N/LZDtsyEGcw0TcKtKnjboQq6opgUVf/Pb4JPnSNSk4thwa4AAAAASUVORK5CYII='); background-size: cover; display: block;"
+  ></span>
+  <picture>
+          <source
+              srcset="/static/bef1220ef8b43f179f6b92042b1f5a62/a59e9/utxo_003.webp 192w,
+/static/bef1220ef8b43f179f6b92042b1f5a62/0ca9f/utxo_003.webp 384w,
+/static/bef1220ef8b43f179f6b92042b1f5a62/db6df/utxo_003.webp 765w"
+              sizes="(max-width: 765px) 100vw, 765px"
+              type="image/webp"
+            />
+          <source
+            srcset="/static/bef1220ef8b43f179f6b92042b1f5a62/3b721/utxo_003.png 192w,
+/static/bef1220ef8b43f179f6b92042b1f5a62/66595/utxo_003.png 384w,
+/static/bef1220ef8b43f179f6b92042b1f5a62/e97d8/utxo_003.png 765w"
+            sizes="(max-width: 765px) 100vw, 765px"
+            type="image/png"
+          />
+          <img
+            class="gatsby-resp-image-image"
+            src="/static/bef1220ef8b43f179f6b92042b1f5a62/e97d8/utxo_003.png"
+            alt="utxo 003"
+            title=""
+            loading="lazy"
+            decoding="async"
+            style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+          />
+        </picture>
+  </a>
+    </span></p>
+<p>그런데, 사실은 트랜잭션에 이렇게 마음대로 적으면 안됩니다.
+비트코인 네트워크는 노드라는 컴퓨터들에 의해 동작합니다. 그래서 사람 말로 적으면 이해를 하지 못합니다.</p>
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 765px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/static/d828e9a27c9960d052bb22b5682ee593/e97d8/utxo_004.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 56.77083333333333%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAAsTAAALEwEAmpwYAAABJklEQVR42o1Sy46CQBD0c+BLPPGNnPED9MiZgJwlQGKyIYG4Lu8hClqbmmQIyi7Yl5me6amumurN8/nENJj3fY+1+K9u8w64BPBJjIBqzfMc+/0ewzDMwLhO6w6HAx6Px9+A6uJ4PELXddR1LfOyLFFVFbIsQ9M0KIpCnruuC03T0LbtS9MZ4G63w3a7lQ8YXdfB8zyYponT6YTb7TbWGYYB3/df3s8kk1kQBHJ/v98lA55dLhfJVjHiXZqm66bQOSWL/8h9FEVwHAfn83kEJNPr9Yp3QosuE5ysyIRgZNnUNb47gaRr8SUa/IiWaMtjo84oi0aomOasYbM4jhGGIZIkWWdIyXSYxgghJMC0AWXbtg3LsqSCjwabrAimQKfzqUzkSCnJv+i1Td12fT1VAAAAAElFTkSuQmCC'); background-size: cover; display: block;"
+  ></span>
+  <picture>
+          <source
+              srcset="/static/d828e9a27c9960d052bb22b5682ee593/a59e9/utxo_004.webp 192w,
+/static/d828e9a27c9960d052bb22b5682ee593/0ca9f/utxo_004.webp 384w,
+/static/d828e9a27c9960d052bb22b5682ee593/db6df/utxo_004.webp 765w"
+              sizes="(max-width: 765px) 100vw, 765px"
+              type="image/webp"
+            />
+          <source
+            srcset="/static/d828e9a27c9960d052bb22b5682ee593/3b721/utxo_004.png 192w,
+/static/d828e9a27c9960d052bb22b5682ee593/66595/utxo_004.png 384w,
+/static/d828e9a27c9960d052bb22b5682ee593/e97d8/utxo_004.png 765w"
+            sizes="(max-width: 765px) 100vw, 765px"
+            type="image/png"
+          />
+          <img
+            class="gatsby-resp-image-image"
+            src="/static/d828e9a27c9960d052bb22b5682ee593/e97d8/utxo_004.png"
+            alt="utxo 004"
+            title=""
+            loading="lazy"
+            decoding="async"
+            style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+          />
+        </picture>
+  </a>
+    </span></p>
+<p>그래서 비트코인 네트워크에 있는 노드들이 이해할 수 있도록, 비트코인에서는 정형화된 트랜잭션 구조를 요구합니다.</p>
+<p>그림처럼, 비트코인의 트랜잭션은 input과 output의 집합으로 이루어져 있습니다.</p>
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 765px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/static/9405ab19c5c5f4655573481be6dfbbd9/e97d8/utxo_005.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 56.77083333333333%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAAsTAAALEwEAmpwYAAABdklEQVR42o2SO08CURCF/RXG0hJ+CRW1lZ2JsbIxlkZrXzFor40KDY0BO6ItWQxarWQRHwhrQHZhl83d12d2EQKCwGkmd+6ZMzM5s+D7PsMI3o7jMAv/8Rb+Ck4TmAcDwX5stVpkMhlc1x0TC+IwL5vN4nneZMH+hyRJRKNROp1O+NZ1nbbWQq3VMNo6mqaF+Xw+TyQSwTTNkaZjgqlUilgsFhYEsIRAenzi/PIKufyCsJ0BLx6PUygURurHVg4mk2UZfI+g1ChKfO/v8H6wR+NwF7P6HvJsIajX67NNCZwL1/J+Be9uYWsV9rexN1cwFDnkCatLs9HA/51sbOV/vKX48EziKE3iJM3ZcZq310/croFQPxFfNSxdH7mAiYJBrtfX5lrusnhhsnT6wfKVRbHeM8FzXXRNQ1EUSqUS1Wp1+oS9rMt9uc3aTZP19BsbmSbKlzHgCCHI5XIkk0kqlcp8h+05Nr7dBccKozd0n30TVVUdrPwD+Qs+A8qm5WYAAAAASUVORK5CYII='); background-size: cover; display: block;"
+  ></span>
+  <picture>
+          <source
+              srcset="/static/9405ab19c5c5f4655573481be6dfbbd9/a59e9/utxo_005.webp 192w,
+/static/9405ab19c5c5f4655573481be6dfbbd9/0ca9f/utxo_005.webp 384w,
+/static/9405ab19c5c5f4655573481be6dfbbd9/db6df/utxo_005.webp 765w"
+              sizes="(max-width: 765px) 100vw, 765px"
+              type="image/webp"
+            />
+          <source
+            srcset="/static/9405ab19c5c5f4655573481be6dfbbd9/3b721/utxo_005.png 192w,
+/static/9405ab19c5c5f4655573481be6dfbbd9/66595/utxo_005.png 384w,
+/static/9405ab19c5c5f4655573481be6dfbbd9/e97d8/utxo_005.png 765w"
+            sizes="(max-width: 765px) 100vw, 765px"
+            type="image/png"
+          />
+          <img
+            class="gatsby-resp-image-image"
+            src="/static/9405ab19c5c5f4655573481be6dfbbd9/e97d8/utxo_005.png"
+            alt="utxo 005"
+            title=""
+            loading="lazy"
+            decoding="async"
+            style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+          />
+        </picture>
+  </a>
+    </span></p>
+<p>(물론 input과 output 외에도 트랜잭션에는 다양한 내용이 들어가지만, 여기서는 패스합니다)</p>
+<h2>비트코인 트랜잭션의 구조</h2>
+<p>트랜잭션은 Input과 Output의 집합으로 구성된다고 했습니다.
+그렇다면 Input과 Output에는 무슨 내용이 들어갈까요?</p>
+<p>먼저 Input 부터 살펴보겠습니다.</p>
+<h3>1) Transaction Input</h3>
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 765px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/static/dd97cc5154bc9af6f2b1656672c08a61/e97d8/utxo_006.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 56.77083333333333%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAAsTAAALEwEAmpwYAAABCklEQVR42q3SP0vDQBjH8bwNZ0dX34JvwLfg6OomlIBKxUFciovg4KooTgVnCeigDkKERqwBQRriNaFJyP35So4aAg6mrT847hmOzz3Hcw6NaK1RSmGMYd44ddVEGnWFz3KB8wMUSuG/DXnyXxB5TpOYBbWgAqJ7D+9gh5vdDh/X56RJYlEhBHme1/DfoNFIID3rwfYG7G9RupuIOLYHgiDA8zzCMKQoijagsZ0MLi556Lg87nV5PjyyHVYpy5IoisiyrN2Tld0k7t2EpdOU5ZMRa32JSNJfs2oF6inYvf1i5fid1Z7P+lWCGCcLTBnD5zhnEGW8jiYM4wwp5YL/8J9Sg9pUy0zX/OA3MVBSyEYyrecAAAAASUVORK5CYII='); background-size: cover; display: block;"
+  ></span>
+  <picture>
+          <source
+              srcset="/static/dd97cc5154bc9af6f2b1656672c08a61/a59e9/utxo_006.webp 192w,
+/static/dd97cc5154bc9af6f2b1656672c08a61/0ca9f/utxo_006.webp 384w,
+/static/dd97cc5154bc9af6f2b1656672c08a61/db6df/utxo_006.webp 765w"
+              sizes="(max-width: 765px) 100vw, 765px"
+              type="image/webp"
+            />
+          <source
+            srcset="/static/dd97cc5154bc9af6f2b1656672c08a61/3b721/utxo_006.png 192w,
+/static/dd97cc5154bc9af6f2b1656672c08a61/66595/utxo_006.png 384w,
+/static/dd97cc5154bc9af6f2b1656672c08a61/e97d8/utxo_006.png 765w"
+            sizes="(max-width: 765px) 100vw, 765px"
+            type="image/png"
+          />
+          <img
+            class="gatsby-resp-image-image"
+            src="/static/dd97cc5154bc9af6f2b1656672c08a61/e97d8/utxo_006.png"
+            alt="utxo 006"
+            title=""
+            loading="lazy"
+            decoding="async"
+            style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+          />
+        </picture>
+  </a>
+    </span></p>
+<h4>1. transaction ID</h4>
+<p>Input은 <strong>송금자가 사용하려고 하는 송금자 소유의 UTXO</strong>입니다.
+지금은 UTXO가 뭔지 정확히 이해하지 않아도 됩니다. 일단 송금자 소유의 비트코인 정도로만 이해하고 넘어갑시다.</p>
+<p>앨리스가 가진 10 BTC는 어디선가 자연 발생한게 아닐 것입니다. 다른 사람에게서 받은 것일수도 있고, 비트코인 초창기부터 채굴을 해서 받은 채굴 보상일 수도 있습니다.</p>
+<p>여기서는 <strong>앨리스가 이유고라는 사람에게서 10 BTC를 송금 받았다</strong>고 가정합시다.
+이유고가 앨리스에게 10 BTC를 보냈다면, 그 <strong>송금 역시 트랜잭션으로 남아있을 것입니다.</strong> 그 트랜잭션의 ID를 적는 곳이 바로 <strong>transaction ID</strong>입니다.</p>
+<p>즉, Input의 transaction ID(txid)는 앨리스가 사용하려고 하는 자금의 출처를 적는 곳입니다.</p>
+<h4>2. scriptSig (Unlocking Script)</h4>
+<p>scriptSig는 Script Signature의 약자입니다.</p>
+<p>이유고가 앨리스에게 10 BTC을 보냈습니다. 이제 이 10BTC는 앨리스의 소유입니다.</p>
+<p>따라서, 앨리스 외에 다른 사람은 이 10 BTC를 사용하지 못하도록 막아야 할 것입니다.</p>
+<p>비트코인에서는 코인을 소유권자 외에 다른 사람이 사용하지 못하도록 하기 위해 <strong>잠궈둡니다.</strong></p>
+<p>어떻게 코인을 잠글 수가 있을까요?</p>
+<p><strong>송금할 10 BTC를 앨리스의 공개키로 서명하여 코인을 잠글 수 있습니다.</strong>
+(이 표현 자체는 부정확합니다. 아래 좀 더 자세하게 서술합니다.)</p>
+<blockquote>
+<p>공부 좀 하신 분들은 아시겠지만, 비트코인은 ECDSA 방식을 사용하고, 이 ECDSA는 한 쌍의 공개키와 비밀키를 만듭니다.</p>
+<p>공개키로 암호화하면 비밀키로만 복호화할 수 있으며, 반대로 비밀키로 암호화하면 공개키로만 복호화할 수 있습니다.</p>
+</blockquote>
+<p>앨리스의 공개키로 암호화한 이 10 BTC는 앨리스만 복호화해서 사용할 수 있습니다.
+앨리스의 비밀키로만 이 10 BTC를 해제할 수 있습니다.
+앨리스의 비밀키는 앨리스만이 가지고 있기 때문이죠.</p>
+<p>따라서 앨리스의 공개키로 암호화된 이 10 BTC는 앨리스의 소유인 것입니다.</p>
+<ul>
+<li></li>
+</ul>
+<p>앨리스는 이제 이유고에게서 받은 10 BTC를 사용해 밥에게 송금을 하려고 합니다.</p>
+<p>사용할 때는 잠궈져 있는 이 10 BTC를 자신의 개인키로 복호화하면 됩니다.
+10 BTC를 개인키로 복호화하는 스크립트가 바로 scriptSig입니다. 잠궈져 있는 10 BTC를 해제하는 것이기 때문에 Unlocking Script(해제 스크립트)라고도 합니다.</p>
+<p>결론적으로, <strong>input에는 앨리스가 얼마를 사용할 것인지가 적혀있습니다.</strong></p>
+<h3>2) Transaction Output</h3>
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 765px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/static/fcbd8fb928e2366135693fbf5aab093b/e97d8/utxo_007.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 56.77083333333333%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAAsTAAALEwEAmpwYAAABLUlEQVR42p2TzUrDQBRG+xquXbr1FXwAn8GlW3dCKahUXIib4kZw4VZRXBVcSyEuVIoQaSs2UMG0ifkhTdKZzJEMrQRETPrBZS7McO69M9/UKCjLMqSUKKVYVrWfrAgp5Dm8SoHaApBIifk+5Nl8xYtjiogFtAxYAyUweejQOdrjbr/Ox+0lYRBoqOd5xHFcoUOVIYDwogW7W3C4w6yxjee6+sBgMMAwDHq9HrZtlwEq3Un/6prHeoOngyYvxye6w1xpmuK6Lo7j4Pv+/0CpF0HDiFg5D1k9G7PRFnhB+OutSo2czYHN+y/WTi3WWyabNwH2xNE0y7L0uBVto/j0Y/qTKW/jiKE7ZSaE3snvrdvtMhqNiKKogg//UG4VIQRJkmjTlwZmKg81j6U/Ct9YKVAg7n39UgAAAABJRU5ErkJggg=='); background-size: cover; display: block;"
+  ></span>
+  <picture>
+          <source
+              srcset="/static/fcbd8fb928e2366135693fbf5aab093b/a59e9/utxo_007.webp 192w,
+/static/fcbd8fb928e2366135693fbf5aab093b/0ca9f/utxo_007.webp 384w,
+/static/fcbd8fb928e2366135693fbf5aab093b/db6df/utxo_007.webp 765w"
+              sizes="(max-width: 765px) 100vw, 765px"
+              type="image/webp"
+            />
+          <source
+            srcset="/static/fcbd8fb928e2366135693fbf5aab093b/3b721/utxo_007.png 192w,
+/static/fcbd8fb928e2366135693fbf5aab093b/66595/utxo_007.png 384w,
+/static/fcbd8fb928e2366135693fbf5aab093b/e97d8/utxo_007.png 765w"
+            sizes="(max-width: 765px) 100vw, 765px"
+            type="image/png"
+          />
+          <img
+            class="gatsby-resp-image-image"
+            src="/static/fcbd8fb928e2366135693fbf5aab093b/e97d8/utxo_007.png"
+            alt="utxo 007"
+            title=""
+            loading="lazy"
+            decoding="async"
+            style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+          />
+        </picture>
+  </a>
+    </span></p>
+<h4>1. amount</h4>
+<p>수신자에게 보낼 비트코인의 양입니다.
+밥에게는 6 BTC를 보낼 테니 여기서 amount는 6이 될 것입니다.</p>
+<h4>2. ScriptPubKey</h4>
+<p>앞에서 비트코인을 송금할 때는 이 비트코인을 받을 사용자만 사용할 수 있도록 비트코인을 ‘잠근다’고 했습니다.</p>
+<p>밥에게 6 BTC를 보낸다는 것은, 이 6BTC를 <strong>밥만 사용할 수 있도록</strong> 만들어야 한다는 것을 의미합니다.</p>
+<p>ScriptPubKey는 6 BTC를 밥의 공개키로 잠궈버리는 스크립트입니다. 밥의 공개키로 잠궈버리면 밥의 비밀키로만 복호화 해 잠금을 풀 수 있습니다.</p>
+<blockquote>
+<p><strong>💡 비트코인을 잠근다?</strong></p>
+<p>앞에서 “10 BTC를 앨리스만 사용할 수 있게 잠근다”, “6 BTC를 밥만 사용할 수 있도록 잠근다”라고 했습니다.</p>
+<p>“비트코인을 잠근다”라는 것은 scriptSig를 사용해 amount 만큼이 담긴 <strong>Output을 잠근다</strong>는 것을 의미합니다.</p>
+<p>따라서 <strong>Input의 transaction ID는 자신의 공개키로 잠궈진 Output을 가리키는 것입니다.</strong></p>
+</blockquote>
+<h2>다시 앨리스와 밥의 예시로</h2>
+<h3>트랜잭션 Input, Output에 실제로 무엇을 넣을까</h3>
+<p>아직 이해가 잘 안됐을 것입니다.</p>
+<p>다시 앨리스와 밥의 예시로 돌아가봅시다.</p>
+<p>앨리스는 트랜잭션을 작성합니다.</p>
+<p>Input의 transaction ID에는 앨리스가 이유고에게서 10 BTC를 받을 때 들어간 트랜잭션의 ID를 넣습니다.</p>
+<p>아래 그림에서, 이유고가 앨리스에게 10 BTC를 보낼 때 사용된 트랜잭션의 ID는 0x1234 라고 합니다. 이 값을 Input의 transaction ID에 넣습니다.</p>
+<p>그리고 이유고가 만든 트랜잭션 안에 들어있는 Output을 사용하기 위해 앨리스의 비밀키로 잠금을 해제하는 스크립트(scriptSig)를 추가합니다.</p>
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 765px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/static/307c850708eb2bee09928f86215fe4da/e97d8/utxo_008.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 56.77083333333333%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAAsTAAALEwEAmpwYAAAB10lEQVR42n2STWsTYRDH8yG8ePOUXPI1csun6EXw1qOgeBEFbwURCh5EaPDWQxMiQhASlJQoVtSNzUubVkPSbkw2u9lkX57dnzzTJKZpcGCZZ2b+87L/mUQcxyil2CRhGKLj/xMdX8UlNgHW9eoXRdEN3youMRqNKJVKAlwt5DgOhUIB3/dvNFt9u65LsVjE87yrCavVKul0mul0KkVN0xTdaDRIJpP0+30Bji0Lx7K46PewLQvLssTfbDZJpVJLXCKXy5HNZqnValyaJka9LoF8Pk8mk6FcLovtBQFf6j95tbeH0W6LrUVPp/MrlcpVwclkQqPZxHUc2sfH/Do5RYUhs9kMwzDkLRR8P8J8tM350weMnz3EadTRJOl4r9eTxQqH2jEc2/i/z+DzR6LaBwJ7LGDNb7QoeFhG3d+CF4/hyTb210+CiZSS318uZc4wI9ejPZhxMpgy84Ml+dGcfOP8DztvT3l+YLD7vkurO9SJ15YkBcUVK1ojn92jIa9/2DheuASpeU6+NeHWS5vbOx3uvFGUO45uRxRfP63E8jgDH1RAFHoEgc/iQhYTHp6N2ToYcHe/w713Nt+6tkwYr0/4b2SkWxSz8aBVGBD7LgRT0WKvYXTBvyLjNTlMol7GAAAAAElFTkSuQmCC'); background-size: cover; display: block;"
+  ></span>
+  <picture>
+          <source
+              srcset="/static/307c850708eb2bee09928f86215fe4da/a59e9/utxo_008.webp 192w,
+/static/307c850708eb2bee09928f86215fe4da/0ca9f/utxo_008.webp 384w,
+/static/307c850708eb2bee09928f86215fe4da/db6df/utxo_008.webp 765w"
+              sizes="(max-width: 765px) 100vw, 765px"
+              type="image/webp"
+            />
+          <source
+            srcset="/static/307c850708eb2bee09928f86215fe4da/3b721/utxo_008.png 192w,
+/static/307c850708eb2bee09928f86215fe4da/66595/utxo_008.png 384w,
+/static/307c850708eb2bee09928f86215fe4da/e97d8/utxo_008.png 765w"
+            sizes="(max-width: 765px) 100vw, 765px"
+            type="image/png"
+          />
+          <img
+            class="gatsby-resp-image-image"
+            src="/static/307c850708eb2bee09928f86215fe4da/e97d8/utxo_008.png"
+            alt="utxo 008"
+            title=""
+            loading="lazy"
+            decoding="async"
+            style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+          />
+        </picture>
+  </a>
+    </span></p>
+<p>여기가 중요합니다. Output은 어떻게 작성할까요?</p>
+<p>먼저 밥에게 6 BTC를 보내야 하니 Output의 amount에 6을 넣습니다.</p>
+<p>그리고 이 Output을 오직 밥만 사용할 수 있도록 Locking Script(ScriptPubKey)에 밥의 공개키로 서명한 스크립트를 넣습니다.
+이제 이 6 BTC가 담긴 Output은 밥만이 사용할 수 있습니다.</p>
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 765px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/static/04d0ecd1ebf32da00274631aaf3673d4/e97d8/utxo_009.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 56.77083333333333%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAAsTAAALEwEAmpwYAAAB1UlEQVR42n2STYvTUBSGs/GvtJv+je76J+Yf6E5QcSFYEMSNCO5EmO5c2VIEi9KgVKrMCGNqk2llvmimmWnSpB/5uMkj97ZTQ6d4INx7z3nPe07ec7QsyxBCsMuSJEHG/2cynsdpuwDbZ/5L0/SWL4/TXNel1WopYJ4oCAIajQZRFN0qlr/P53OazSZhGK467HQ6lEolFouFInUcR52maVIoFLBtWwGnnkfgeVzaI3zPw/M85bcsi2KxuMFptVqNSqVCt9tl7DgYvZ4K1Ot1yuUy7XZbvcM45qD3mzf7+xiDgXpLk93JfF3XV4Sz2QzTspgHAYN+n7PhH0SSsFwuMQxD3aX5R4eMH9/jtPqQ6bNH+GYPKZKMj0YjNViloXRMpj7R+Qn8+Era/ULsTxVY6puuCYNvbcT9PXj1BJ7exf/5XWFSIdTvb4ayVhh3HjK4WjK8WrCM4o346Vr8o5Nrnn8458X7Pi8/X2JdTGQiWW5IilA5MsGxG/H6cMLbXz5BmGxAIl2lvOsFaNULtAcH3KkO+Xg8leWQ4fwKaZvljCMQMWkSEscRNxtysx5nY5dPho1uOuh9m5Hjqg7Z7vCfA1Utzdi50CKJyUQIIiITkRrGNkYS/gUlkzYLURIesgAAAABJRU5ErkJggg=='); background-size: cover; display: block;"
+  ></span>
+  <picture>
+          <source
+              srcset="/static/04d0ecd1ebf32da00274631aaf3673d4/a59e9/utxo_009.webp 192w,
+/static/04d0ecd1ebf32da00274631aaf3673d4/0ca9f/utxo_009.webp 384w,
+/static/04d0ecd1ebf32da00274631aaf3673d4/db6df/utxo_009.webp 765w"
+              sizes="(max-width: 765px) 100vw, 765px"
+              type="image/webp"
+            />
+          <source
+            srcset="/static/04d0ecd1ebf32da00274631aaf3673d4/3b721/utxo_009.png 192w,
+/static/04d0ecd1ebf32da00274631aaf3673d4/66595/utxo_009.png 384w,
+/static/04d0ecd1ebf32da00274631aaf3673d4/e97d8/utxo_009.png 765w"
+            sizes="(max-width: 765px) 100vw, 765px"
+            type="image/png"
+          />
+          <img
+            class="gatsby-resp-image-image"
+            src="/static/04d0ecd1ebf32da00274631aaf3673d4/e97d8/utxo_009.png"
+            alt="utxo 009"
+            title=""
+            loading="lazy"
+            decoding="async"
+            style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+          />
+        </picture>
+  </a>
+    </span></p>
+<p>이렇게 하면 트랜잭션이 완성일까요?</p>
+<h3>남은 4 BTC는 어디로?</h3>
+<p>아닙니다. 트랜잭션을 잘 읽어보세요.</p>
+<p>Input에는 앨리스 소유의 10 BTC를 쓴다고 했고,
+Output에는 이 10 BTC 중 6 BTC를 밥에게 보낸다고 적혀있습니다.</p>
+<p>그렇다면 남은 4 BTC는 어디로 가는 걸까요?</p>
+<p>우리가 일반적으로 은행에서 송금을 할 때는 100만원 중 10만원을 보내면 나머지 90만원은 그대로 계좌에 남아있지만, 비트코인은 다릅니다.</p>
+<p>만약 이 상태로 트랜잭션을 제출하면 남은 4 BTC는 사라지게 됩니다.</p>
+<h3>비트코인에서 송금은 “박스에 돈을 나눠담는 일”</h3>
+<p>모든 비트코인은 어떤 박스 안에 담겨있으며, 이 박스는 소유자의 공개키로 암호화 되어 있습니다.
+송금을 한다는 것은, **<em>소유자가 자신의 박스를 자신의 개인키로 해제한 후, 다른 박스에 나눠담는 것</em>**입니다.</p>
+<blockquote>
+<p><strong>Input</strong>은 10 BTC가 담긴 박스를 <strong>해제</strong>하는 것입니다.</p>
+<p>transaction ID로 어떤 박스인지 지정하고 scriptSig에 박스를 해제하는 스크립트를 담습니다.</p>
+<p><strong>Output</strong>은 박스에 들어있던 10 BTC 중 원하는 양을 다른 박스에 담아 <strong>받는 사람의 공개키로 잠그는 것</strong>입니다.</p>
+</blockquote>
+<p>앨리스와 밥의 예시를 박스로 표현하면 아래의 그림과 같습니다.</p>
+<p>앨리스는 10 BTC가 들어있는 박스를 풀고, 새로운 박스를 하나 만듭니다.
+이 새로운 박스에는 6 BTC를 넣고 밥의 공개키로 잠급니다.</p>
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 765px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/static/4ea8117a1f1b943d0eccb2a825d5618b/e97d8/utxo_010.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 56.77083333333333%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAzklEQVR42qVSPQuEMAz1/2/uroL0B7i6dHEUHESXDoroUAVR8KtPWqjcndU7zweBNs17SZpYuAEhhDJ9NsG6IpnQ9z3atj19tz7FTNn1fRxHeJ4H27bBGDPGvgmu6wrOuSK+Yp5nTNOEsiwRBAHyPEccxzvnIKidMkhm931/F5ItSpMxXdfBdV0QQpBl2XmFWpBSijRNEUWRIkv/six78DAMqKoKRVGgaZrzP9RZkiSB4zgIwxD/4jDluq5Vi1drc7UJP035UYXf9vC24FNskGZcRMVgilcAAAAASUVORK5CYII='); background-size: cover; display: block;"
+  ></span>
+  <picture>
+          <source
+              srcset="/static/4ea8117a1f1b943d0eccb2a825d5618b/a59e9/utxo_010.webp 192w,
+/static/4ea8117a1f1b943d0eccb2a825d5618b/0ca9f/utxo_010.webp 384w,
+/static/4ea8117a1f1b943d0eccb2a825d5618b/db6df/utxo_010.webp 765w"
+              sizes="(max-width: 765px) 100vw, 765px"
+              type="image/webp"
+            />
+          <source
+            srcset="/static/4ea8117a1f1b943d0eccb2a825d5618b/3b721/utxo_010.png 192w,
+/static/4ea8117a1f1b943d0eccb2a825d5618b/66595/utxo_010.png 384w,
+/static/4ea8117a1f1b943d0eccb2a825d5618b/e97d8/utxo_010.png 765w"
+            sizes="(max-width: 765px) 100vw, 765px"
+            type="image/png"
+          />
+          <img
+            class="gatsby-resp-image-image"
+            src="/static/4ea8117a1f1b943d0eccb2a825d5618b/e97d8/utxo_010.png"
+            alt="utxo 010"
+            title=""
+            loading="lazy"
+            decoding="async"
+            style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+          />
+        </picture>
+  </a>
+    </span></p>
+<p>비트코인은 한번 해제한 박스는 다시 재사용할 수 없습니다.</p>
+<p>남은 4 BTC를 계속 앨리스의 소유로 두려면 어떻게 해야 할까요?
+박스를 하나 더 만들어서, 남은 4 BTC를 담고 다시 자기 자신에게 보내야 합니다.</p>
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 765px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/static/ff471136f5df9b152a35af17de3452ef/e97d8/utxo_011.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 56.77083333333333%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAAsTAAALEwEAmpwYAAABBElEQVR42pVTy4qEMBD0/2/evXlQP0CvehDE24gKIggigiAqiu9nLQlEZnd1cAoCeXRXV1cSDl/gOA462PwK3KekK/R9j7qub8+5v2RX1dl6nmfIsgye5xHH8WXsL8J931FVFU18x7quWJYFWZZB13WkaQrP886cf4RskwSR6pqmnUSkxa7raEzbthBFkaoMw/BeISM0TZMGOo5Dk6dpoqQM4ziiLEsURYGmae49ZFWCIIAgCLBt+1RI1A3DgG3b6B5pWZKk82I+ekiQ5zlt8x3EP6KWeKiqKizLwuv1uvfw6S2TQoqiwDAMRFH0TOHVO2Rr4pvruvB9H0mSPHvY3/yaK8IfbZ1TtnMjE7MAAAAASUVORK5CYII='); background-size: cover; display: block;"
+  ></span>
+  <picture>
+          <source
+              srcset="/static/ff471136f5df9b152a35af17de3452ef/a59e9/utxo_011.webp 192w,
+/static/ff471136f5df9b152a35af17de3452ef/0ca9f/utxo_011.webp 384w,
+/static/ff471136f5df9b152a35af17de3452ef/db6df/utxo_011.webp 765w"
+              sizes="(max-width: 765px) 100vw, 765px"
+              type="image/webp"
+            />
+          <source
+            srcset="/static/ff471136f5df9b152a35af17de3452ef/3b721/utxo_011.png 192w,
+/static/ff471136f5df9b152a35af17de3452ef/66595/utxo_011.png 384w,
+/static/ff471136f5df9b152a35af17de3452ef/e97d8/utxo_011.png 765w"
+            sizes="(max-width: 765px) 100vw, 765px"
+            type="image/png"
+          />
+          <img
+            class="gatsby-resp-image-image"
+            src="/static/ff471136f5df9b152a35af17de3452ef/e97d8/utxo_011.png"
+            alt="utxo 011"
+            title=""
+            loading="lazy"
+            decoding="async"
+            style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+          />
+        </picture>
+  </a>
+    </span></p>
+<h3>남은 4 BTC를 자기자신이 사용할 수 있도록 Output 추가</h3>
+<p>다시 앨리스와 밥의 예시로 돌아옵시다.</p>
+<p>앨리스가 밥에게 10 BTC 중 6 BTC를 보내는 트랜잭션에서, 남은 4 BTC를 계속 소유하기 위해서는 4BTC를 자기자신의 공개키로 암호화한 Output을 추가해야 합니다.</p>
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 765px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/static/2bc1e2dddd57a55e2018f1e6dd4a943d/e97d8/utxo_012.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 56.77083333333333%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAAsTAAALEwEAmpwYAAAB1UlEQVR42n1SwW7TQBD1pVd+gJ5ySCSU38gt/8QJhFRERVWEyg1Qc+CEUKKcciARVSQXQVDrYJumKimyiaM4tuPY6931q3btGjepGGk0szNvZ2ffjJKmKRhjuE8opRD5/4nIl3HKfYBNW1bO+VasjFNc10Wv15PAcqEgCNDpdEAI2Xqs7IdhiG63iziOsw6HwyHq9TrW67Us6jiOtIZhoFqtwrZtCfQ8D0vPh2X/lXa5XMq4aZqo1WoFTmm1Wmg2m1BVFTPHgTYey0S73Uaj0UC/35dnQmKcnY1w/P4tTH2MhGQdie7E/cFgkBVcrVYwTBNhEOBC1zGdXIJRiiiKoGma9IXMdR3f9l9i+OoI2us3mE0uZVzkLcuSg5UcisDC80Gur4CvJ+DqFyS+B8Go4DfJN6A7dlHZv8Kjpyoqezo+aa5gEpRx+f1iKDnDcMMYF/MIk/kaEUkK8llOfsfw8fDwDyovfmL38BofZUEOnuLulOU5ZfjlEhx9X+DduY8gpgWI5Tc+nPvYeTbFg8en2HkywfEoK8jSu6ulFMuZEIAl4DRGkhDcbgjPnR9TF3t9GwcnMzz/bGH0e5E9io0O/+0VZPubX7hVRhOkLAYYkcoZ3cKIgjelOTF8dg6SUAAAAABJRU5ErkJggg=='); background-size: cover; display: block;"
+  ></span>
+  <picture>
+          <source
+              srcset="/static/2bc1e2dddd57a55e2018f1e6dd4a943d/a59e9/utxo_012.webp 192w,
+/static/2bc1e2dddd57a55e2018f1e6dd4a943d/0ca9f/utxo_012.webp 384w,
+/static/2bc1e2dddd57a55e2018f1e6dd4a943d/db6df/utxo_012.webp 765w"
+              sizes="(max-width: 765px) 100vw, 765px"
+              type="image/webp"
+            />
+          <source
+            srcset="/static/2bc1e2dddd57a55e2018f1e6dd4a943d/3b721/utxo_012.png 192w,
+/static/2bc1e2dddd57a55e2018f1e6dd4a943d/66595/utxo_012.png 384w,
+/static/2bc1e2dddd57a55e2018f1e6dd4a943d/e97d8/utxo_012.png 765w"
+            sizes="(max-width: 765px) 100vw, 765px"
+            type="image/png"
+          />
+          <img
+            class="gatsby-resp-image-image"
+            src="/static/2bc1e2dddd57a55e2018f1e6dd4a943d/e97d8/utxo_012.png"
+            alt="utxo 012"
+            title=""
+            loading="lazy"
+            decoding="async"
+            style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+          />
+        </picture>
+  </a>
+    </span></p>
+<p>이제 트랜잭션이 완성되었습니다.</p>
+<p>이 트랜잭션이 정상적으로 블록체인에 올라가게 되면,
+앞으로 밥은 Output 0을 사용할 수 있습니다.
+앨리스는 Output 1을 사용할 수 있습니다.</p>
+<h2>정리</h2>
+<p>아직 Input 값이 헷갈릴 수 있습니다.
+어떻게 앨리스는 이유고에게서 받은 10 BTC를 사용할 수 있었던 걸까요?</p>
+<p>바로 이유고가 만든 트랜잭션의 Output 0에는 이렇게 쓰여있었기 때문입니다.</p>
+<ul>
+<li>amount: 10</li>
+<li>locking script: 앨리스의 공개키로 암호화된 스크립트</li>
+</ul>
+<p>즉, 앨리스는 이유고가 만든 트랜잭션에 있는 Output 0을 사용한 것입니다.</p>
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 765px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/static/6077d94b7ad25d2d1b5ce38886634d05/e97d8/utxo_013.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAAsTAAALEwEAmpwYAAAB2UlEQVR42nWTwY/SUBDGufjHEK7cPRguu2f+BONBE7PJHvaiJsaDF2/qzXDxpjG7kJCNFEOIMUHWg8kGNyvdsgLNUmRbaGHbR9uf6WthAcMkL9P3zbzvTb+ZlwKYz+eEYcimbcNXLYpHeQtLBUGwDEQr2i++V/FVgm3EklAIgaIo2La9FvA8j0qlwmw2Wz31H4FhGNRqtdsKTdMkk8nQarUkYJkmruui6zrpdBpN0yQ+Ho9xHIdr05Q+OhdZuVwmm83eEjYaDXZ3dzgqFjm/uOBYUWSgXq+Ty+WoVqty73oe35pNXr99w+nZGSLRrVAokM/nUVU1JowE7es6V/0+teKRXNZoxNz36WgawvNkov3zBGP/Pt2ne4yePGba+xNf5N4sq5WEYRDguC6Weo6vfCT88gm7oxIpZE8m+ELIxMnJV/wXj+DdS8SrA5xOXNFciKX+SZdjcduGzYPDSx6WevweJA0CgkT8H5cWe6Ur9g87HBwP6P61N/sUE/oJYbPnkHre5s6zU753HUnnhyGLeE1zuPthwr33OjulG9rDqcSDjbFK+ckcDsdTPv8aUmkNMKyYcDGXUkPLREyuwbVxrRHOym+uVbgY3PiWcEm0hksPfoCsOPLbHtA/2zYybtZ4dy4AAAAASUVORK5CYII='); background-size: cover; display: block;"
+  ></span>
+  <picture>
+          <source
+              srcset="/static/6077d94b7ad25d2d1b5ce38886634d05/a59e9/utxo_013.webp 192w,
+/static/6077d94b7ad25d2d1b5ce38886634d05/0ca9f/utxo_013.webp 384w,
+/static/6077d94b7ad25d2d1b5ce38886634d05/db6df/utxo_013.webp 765w"
+              sizes="(max-width: 765px) 100vw, 765px"
+              type="image/webp"
+            />
+          <source
+            srcset="/static/6077d94b7ad25d2d1b5ce38886634d05/3b721/utxo_013.png 192w,
+/static/6077d94b7ad25d2d1b5ce38886634d05/66595/utxo_013.png 384w,
+/static/6077d94b7ad25d2d1b5ce38886634d05/e97d8/utxo_013.png 765w"
+            sizes="(max-width: 765px) 100vw, 765px"
+            type="image/png"
+          />
+          <img
+            class="gatsby-resp-image-image"
+            src="/static/6077d94b7ad25d2d1b5ce38886634d05/e97d8/utxo_013.png"
+            alt="utxo 013"
+            title=""
+            loading="lazy"
+            decoding="async"
+            style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+          />
+        </picture>
+  </a>
+    </span></p>
+<p><strong>이유고가 앨리스에게 10 BTC를 보낸 시점에서 이 Output 0은 아직 해제되어 사용되지 않은 상태입니다.</strong>
+즉, Output 0은 어떤 트랜잭션의 Input 값으로도 사용되지 않았습니다.</p>
+<p>이렇게 트랜잭션의 Output이 다른 트랜잭션의 Input으로 아직 사용되지 않은 상태를
+<strong>UTXO(Unspent Tx Output, 아직 소비되지 않은 트랜잭션 아웃풋)</strong> 이라고 합니다.</p>
+<p>이후 이유고가 만든 트랜잭션의 Output 0은 앨리스에 의해 새로운 트랜잭션의 Input에 넣어졌기 때문에 더이상 UTXO가 아니게 됩니다.(한번 사용된 Output은 다시 사용할 수 없습니다)</p>
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 765px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/static/dde0d653eb9dce529a95f3173af440c9/e97d8/utxo_014.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAAsTAAALEwEAmpwYAAAB2UlEQVR42nWTPY8SURSG5+8QWnoLQ4M9/8DOxGy00EJjooWNndoZGrstNC4hMUDEmOgGsmriIrBhZfhcdnZgZmcG7nzymBlhGEg8yc3JOefNue89570SgOd5rFYr9u1/+aSF9RC3MSlZSPogCOI4ecL8fi6Jl3zfp1KpYJrmTkMhBOVyOfIJOuwTUBSFWq0WN5V0XSedTtNsNmNA2GQ8HpNKpZBlOcqHOMuy0DQt9qGVSiUymUx8iVSv18nlchSLRSwhOP3dioqfazWy2SzVajWKHdfha6PBy9evOG23cddzKxQK5PN5ut3uvyeHNIejEdeahtxqMei0cW0b13XpyzKe40TA+fcGyv3bDB8fMHt0l8VoEOVtIWK2EcNwLuZyibicsvrxDX4e46gKTgDKXEe3bCxAPf6C/+wOvHmO++IBlnweNfE9LxrBZkHxlk3bpakKfl3ZXFwLFo6HF6zw13s46escHE25967Hw48KvanGXL1iMplEr4kZbhZ3aQiefjjhyfsGo9l248Ea8KlncePQ4ObbCbeOBJ2pwVD+Q+fsDGc9lh2GrmMzHfS46J8jloutztb6MrQ5rjEDYWDrKpZp7Ehoo09pR/V7P2BH0OGPCLZn02Rf6H8ByZw2ePKFytEAAAAASUVORK5CYII='); background-size: cover; display: block;"
+  ></span>
+  <picture>
+          <source
+              srcset="/static/dde0d653eb9dce529a95f3173af440c9/a59e9/utxo_014.webp 192w,
+/static/dde0d653eb9dce529a95f3173af440c9/0ca9f/utxo_014.webp 384w,
+/static/dde0d653eb9dce529a95f3173af440c9/db6df/utxo_014.webp 765w"
+              sizes="(max-width: 765px) 100vw, 765px"
+              type="image/webp"
+            />
+          <source
+            srcset="/static/dde0d653eb9dce529a95f3173af440c9/3b721/utxo_014.png 192w,
+/static/dde0d653eb9dce529a95f3173af440c9/66595/utxo_014.png 384w,
+/static/dde0d653eb9dce529a95f3173af440c9/e97d8/utxo_014.png 765w"
+            sizes="(max-width: 765px) 100vw, 765px"
+            type="image/png"
+          />
+          <img
+            class="gatsby-resp-image-image"
+            src="/static/dde0d653eb9dce529a95f3173af440c9/e97d8/utxo_014.png"
+            alt="utxo 014"
+            title=""
+            loading="lazy"
+            decoding="async"
+            style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+          />
+        </picture>
+  </a>
+    </span></p>
+<p>대신, 새로운 트랜잭션으로 인해 새로운 UTXO 두 개가 생기게 되었습니다.</p>
+<p>정리하면, <strong>UTXO는 어떤 트랜잭션으로 인해 생긴 아직 사용되지 않은 Output</strong>이며,
+송금 트랜잭션으로 인해 Input 값으로 사용되면 UTXO로의 기능은 잃게 됩니다.</p>
+<h2>여러 개의 Input을 사용하는 경우</h2>
+<p>한 가지 예시를 더 들어보겠습니다.</p>
+<p>만약, 앨리스가 이유고에게 10 BTC를 받았고, 삼유고에게도 10 BTC를 받았다고 가정해봅시다.</p>
+<p>앨리스가 가진 자산은 총 20 BTC가 되며, 이 중 밥에게 15 BTC를 전송하고 싶습니다.</p>
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 765px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/static/151d8da80146595bb4e169ca358cfc67/e97d8/utxo_015.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAAsTAAALEwEAmpwYAAACAElEQVR42m1TUWvTUBTOT+mje697lSl98Qf0wZf5LKKIPrjSR3+BCGNPffLFQQU36pB2yypYZA3YUNg6ytLaNe2SNWlu0iTNTfLJTZOsUQ8cwj335HzfOee7nGEYKJVKME0TzMIwRGKU0sz5f8buWV5inCiKyOVy6Ha7UUDTdKiqmvlh3YMg+CfGjMWjgoIgoFwuoy20MZlOcHHZw9wwQAhBvV6HbdvrdDJAzBRFAc/zaVHOpxSj8RhEliEd1jD8eoTQJJjc3GBj4x4Gg0GUzEZjWRZ0TVt9dT2K12o15PP5FIRLkH7PLLz/1sMefwXXB06Oj1EoFNBoNKJ7d7nEj7M2Puzuotu7hBfPrVKpoFgsot/vr1pmLV2cn8P3ffhhCNOxQSwrapWx85bLKNHsCFBfPsXoxTZmO8+wGI9WQK6Tso0Ydjod3N/chOu6oMzjAuySbd6nXnQmZ9/hv34CvHsO7+02rOHVSgmel1EIV61W8XBrC79EEdeKClmdZbYWxCMRhnO8OpjizWcJO0cKRrdZmSUb52R5DL7ZhD4e4bp1CrndAnWdNCmIF3siWXiwT/Doo4zHBw766iIFXJcQR6mPxcKEJMnY/3SKwy8tOKZ1hxozJboGj8wAh8Cd38I0SYZZok8uJgzFpmgODfyc2vD8INJcRtDsRQR3/jezhOEfab4rqefTZnQAAAAASUVORK5CYII='); background-size: cover; display: block;"
+  ></span>
+  <picture>
+          <source
+              srcset="/static/151d8da80146595bb4e169ca358cfc67/a59e9/utxo_015.webp 192w,
+/static/151d8da80146595bb4e169ca358cfc67/0ca9f/utxo_015.webp 384w,
+/static/151d8da80146595bb4e169ca358cfc67/db6df/utxo_015.webp 765w"
+              sizes="(max-width: 765px) 100vw, 765px"
+              type="image/webp"
+            />
+          <source
+            srcset="/static/151d8da80146595bb4e169ca358cfc67/3b721/utxo_015.png 192w,
+/static/151d8da80146595bb4e169ca358cfc67/66595/utxo_015.png 384w,
+/static/151d8da80146595bb4e169ca358cfc67/e97d8/utxo_015.png 765w"
+            sizes="(max-width: 765px) 100vw, 765px"
+            type="image/png"
+          />
+          <img
+            class="gatsby-resp-image-image"
+            src="/static/151d8da80146595bb4e169ca358cfc67/e97d8/utxo_015.png"
+            alt="utxo 015"
+            title=""
+            loading="lazy"
+            decoding="async"
+            style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+          />
+        </picture>
+  </a>
+    </span></p>
+<p>이 때 트랜잭션을 어떻게 작성해야 할까요?</p>
+<p>답은 간단합니다.</p>
+<p>이유고가 만든 트랜잭션에 있는 UTXO와, 삼유고의 트랜잭션에 있는 UTXO를 Input으로 넣어주면 됩니다.</p>
+<p>이렇게 Inputd에는 총 20 BTC가 있게 됩니다.</p>
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 765px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/static/9a74ad69693ebb8ffb4a8bdd62048149/e97d8/utxo_016.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 56.77083333333333%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAAAsTAAALEwEAmpwYAAACCUlEQVR42m1Sv2/TQBT2H5MpCxJLFjKUIf9BxIjEClIHIIIOQUJ06VaEABXIxIhQJAZMaGqBh6QkytA0aXEDtR3iNHGMk9j4R87Oh3x23Br6pNO9e/fd97733jGz2QzFYhGGYSCw5XKJlRFCEufLLLj3PC8+M51OB6lUCt1ulwZ0XYem/U48uLh83/8vdhHHNBoNFAoFBLtyNsTR8RElDRRzHAfbthPk//qqqoLneeoHyZigrJ+iiLmiQGI/Qa5U4BtznI3HSKfTkCSJgoPWmIaBiarSPUgaGMuyyGQycRLGjzJJEwPbbBcvqydwyBLc3h5yuRyq1Sq9t10X+60WXuy8QkcQsCCExkulEvL5PHq9XtjDoCRBEGhjvaUP07ZouZZlURBxXQo0D1rQNm5jsPkA+pP7sAZ9GndsG5qmnStst9vIZrNwHAdutFb9mE6nIIuQcFb/CnLvFrC1Aae4DvM0VLRwXdqOmLBcLuP62hoODg8hj8ZQ1ElMGDl0m+/z8O7cAB6vY3H3Jkzxx2o6ySnLsozK7i60voRBnYfSrIE49jkoIpw0v+HXo4cYPdtGf2sTM0m89FvRKZumAel0iPfvvuDjhxpsw4zBxA8VfD4xcOWNiqtPj3HtrQ5hFGI8P/k/mUgwRn8IOHGKumJh4fk0FgJDxPfhHM/rKnZqQ7xuahjpZtSRpMK/6hUlOd6ISr4AAAAASUVORK5CYII='); background-size: cover; display: block;"
+  ></span>
+  <picture>
+          <source
+              srcset="/static/9a74ad69693ebb8ffb4a8bdd62048149/a59e9/utxo_016.webp 192w,
+/static/9a74ad69693ebb8ffb4a8bdd62048149/0ca9f/utxo_016.webp 384w,
+/static/9a74ad69693ebb8ffb4a8bdd62048149/db6df/utxo_016.webp 765w"
+              sizes="(max-width: 765px) 100vw, 765px"
+              type="image/webp"
+            />
+          <source
+            srcset="/static/9a74ad69693ebb8ffb4a8bdd62048149/3b721/utxo_016.png 192w,
+/static/9a74ad69693ebb8ffb4a8bdd62048149/66595/utxo_016.png 384w,
+/static/9a74ad69693ebb8ffb4a8bdd62048149/e97d8/utxo_016.png 765w"
+            sizes="(max-width: 765px) 100vw, 765px"
+            type="image/png"
+          />
+          <img
+            class="gatsby-resp-image-image"
+            src="/static/9a74ad69693ebb8ffb4a8bdd62048149/e97d8/utxo_016.png"
+            alt="utxo 016"
+            title=""
+            loading="lazy"
+            decoding="async"
+            style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+          />
+        </picture>
+  </a>
+    </span></p>
+<p>Output에는 밥의 공개키로 암호화한 스크립트를 넣고, 나머지 5 BTC가 들어있는 Output은 앨리스의 공개키로 암호화한 스크립트를 넣으면 됩니다.</p></div><style data-emotion="css 1mhg4js">.css-1mhg4js{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;margin-bottom:40px;position:relative;box-sizing:border-box;width:100%;max-width:768px;margin-left:auto;margin-right:auto;}@media screen and (max-width: 768px){.css-1mhg4js{-webkit-box-flex-wrap:wrap;-webkit-flex-wrap:wrap;-ms-flex-wrap:wrap;flex-wrap:wrap;}}</style><div class="css-1mhg4js e25qew83"><style data-emotion="css 1yosuc1">.css-1yosuc1{-webkit-flex:1 1 50%;-ms-flex:1 1 50%;flex:1 1 50%;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;padding:12px;border-radius:6px;border:1px solid #eaebec;-webkit-text-decoration:none;text-decoration:none;}.css-1yosuc1:first-child{margin-right:8px;}.css-1yosuc1:last-child{margin-left:8px;text-align:right;}.css-1yosuc1:first-child:last-child{margin:0;}@media screen and (max-width: 768px){.css-1yosuc1{-webkit-flex-basis:100%;-ms-flex-preferred-size:100%;flex-basis:100%;}.css-1yosuc1:first-child,.css-1yosuc1:last-child{margin:6px 1em;}}</style><a class="css-1yosuc1 e25qew82" href="/which-cryptocurrencies-are-the-most-secure/"><style data-emotion="css 127sw7r">.css-127sw7r{font-size:0.825em;margin-bottom:8px;}</style><div class="css-127sw7r e25qew81">다음 글</div><strong class="css-0 e25qew80">[번역] 어떤 암호화폐가 가장 안전할까? (Which cryptocurrencies are the most secure?)</strong></a></div><style data-emotion="css hx9xpc">@media (max-width: 768px){.css-hx9xpc{padding:0 20px;}}</style><div class="css-hx9xpc e1gqsjds0"></div><style data-emotion="css 4rh9hc">.css-4rh9hc{display:grid;place-items:center;margin-top:auto;padding:50px 0;font-size:1em;text-align:center;}@media (max-width: 768px){.css-4rh9hc{font-size:13px;}}</style><footer class="css-4rh9hc e1oae0v80"><style data-emotion="css zjik7">.css-zjik7{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;}</style><div class="css-zjik7 e1ubbk500"><style data-emotion="css av4fav">.css-av4fav{font-size:0.8rem;-webkit-text-decoration:underline;text-decoration:underline;margin-right:0.5em;}</style><a href="https://github.com/nittre" target="_blank" class="css-av4fav e1ubbk501">🐙 github</a><a href="mailto:youjinlee1997@gmail.com" target="_blank" class="css-av4fav e1ubbk501">✉️ youjinlee1997@gmail.com</a></div><br/>© 2023 유진, Powered By Gatsby.</footer></main></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/utxo/";/*]]>*/</script><!-- slice-start id="_gatsby-scripts-1" -->
+          <script
+            id="gatsby-chunk-mapping"
+          >
+            window.___chunkMapping="{\"app\":[\"/app-b5073e3230a566418316.js\"],\"component---src-pages-404-tsx\":[\"/component---src-pages-404-tsx-25b7fb134a8d4af4b068.js\"],\"component---src-pages-index-tsx\":[\"/component---src-pages-index-tsx-29ab3697ac39e1c173d0.js\"],\"component---src-pages-info-tsx\":[\"/component---src-pages-info-tsx-dadc1bf5c2bddb9d52ea.js\"],\"component---src-templates-post-template-tsx\":[\"/component---src-templates-post-template-tsx-343cc436d4ccf7c48baf.js\"]}";
+          </script>
+        <script>window.___webpackCompilationHash="7ef198e56f0aa0388d75";</script><script src="/webpack-runtime-57a29621e793404b81a0.js" async></script><script src="/framework-6a525285796fb83f2864.js" async></script><script src="/app-b5073e3230a566418316.js" async></script><!-- slice-end id="_gatsby-scripts-1" --></body></html>
