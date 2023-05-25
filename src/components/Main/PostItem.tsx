@@ -24,6 +24,7 @@ const TitleDateWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  flex-wrap: wrap;
 `
 
 const ThumbnailImage = styled(GatsbyImage)`
@@ -51,13 +52,13 @@ const Title = styled.div`
   font-size: 1.7em;
   font-weight: 700;
   padding: 0.4em 0;
+  margin-right: 0.3em;
 `
 
 const Date = styled.div`
   font-size: 0.8em;
   font-weight: 300;
   opacity: 0.7;
-  margin-left: 0.5em;
 `
 
 const Category = styled.div`
