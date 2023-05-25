@@ -57,7 +57,7 @@ const Introduction: FunctionComponent<IntroductionProps> = function ({
 
         
           <Title>유진의 하드디스크</Title>
-          <SubTitle>스스로 이해하고, 더 오래 기억하기</SubTitle>
+          <SubTitle>환영합니다!👋 <br/> 스스로 이해하고, 더 오래 기억하기 위해 만들어진 공간입니다. </SubTitle>
        
       </Wrapper>
     </Background>
