@@ -28,15 +28,22 @@ p {
 h1,
 h2,
 h3 {
-  font-weight: 800;
-  margin-bottom: 30px;
+  font-weight: 700;
+  margin-bottom: 1em;
 }
 
 * + h1,
-* + h2,
-* + h3 {
-  margin-top: 80px;
+* + h2 {
+  margin-top: 3em;
 }
+* + h3 {
+  margin-top: 1em;
+}
+* + h4 {
+  margin-top: 0.8em;
+}
+
+
 hr + h1,
   hr + h2,
   hr + h3 {
@@ -44,15 +51,19 @@ hr + h1,
   }
 
   h1 {
-    font-size: 30px;
+    font-size: 2em;
   }
 
   h2 {
-    font-size: 25px;
+    font-size: 1.5em;
   }
 
   h3 {
-    font-size: 20px;
+    font-size: 1.3em;
+  }
+
+  h4 {
+    font-size: 1.1em;
   }
 
   // Adjust Quotation Element Style
@@ -60,7 +71,6 @@ hr + h1,
     margin: 30px 0;
     padding: 5px 15px;
     border-left: 2px solid #000000;
-    font-weight: 800;
   }
 
   // Adjust List Element Style
