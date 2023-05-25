@@ -89,7 +89,7 @@ const IndexPage: FunctionComponent<IndexPageProps> = function ({
             title={title}
             description={description}
             url={siteUrl}
-            image={publicURL}
+            // image={publicURL}
         >
             <Introduction profileImage={gatsbyImageData} />
             <CategoryList

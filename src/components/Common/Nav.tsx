@@ -18,16 +18,24 @@ const NavWrapper = styled.div`
   justify-content: space-between;
   background-color: #ffffffbb;
   
-
-  @media (max-width: 768px) {
-    font-size: 13px;
-    padding: 0px 21px;
-  }
+  font-size: 1.2em;
+  font-weight: 600;
 
   
+  @media (max-width: 768px) {
+    font-size: 1em;
+    padding: 0px 21px;
+  }
 `
 
 const HomeButton = styled(Link)`
+  
+  &:hover {
+    color: #6AB767
+  }
+`
+
+const InfoButton = styled(Link)`
   font-size: 1.2em;
   font-weight: 600;
 
@@ -43,6 +51,7 @@ const Nav: FunctionComponent = function () {
   return (
     <NavWrapper>
       <HomeButton to='/'>🌿 nittre.github.io</HomeButton>
+      <InfoButton to='/info/'>👋</InfoButton>
     </NavWrapper>
   )
 }
