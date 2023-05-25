@@ -31,6 +31,8 @@ const Wrapper = styled.div`
 const SubTitle = styled.div`
   font-size: 1em;
   font-weight: 400;
+  
+  margin-bottom: 0.5em;
 
   @media (max-width: 768px) {
     font-size: 0.8em;
@@ -47,6 +49,17 @@ const Title = styled.div`
   }
 `
 
+const ExternalLink = styled.a`
+  font-size: 0.8em;
+  text-decoration: underline;
+  margin-right: 0.5em;
+`
+
+const LinkWrapper = styled.div`
+  display: flex;
+  
+`
+
 const Introduction: FunctionComponent<IntroductionProps> = function ({
     profileImage
 }) {
@@ -57,8 +70,11 @@ const Introduction: FunctionComponent<IntroductionProps> = function ({
 
         
           <Title>유진의 하드디스크</Title>
-          <SubTitle>환영합니다!👋 <br/> 스스로 이해하고, 더 오래 기억하기 위해 만들어진 공간입니다. </SubTitle>
-       
+          <SubTitle>환영합니다! <br/> 스스로 이해하고, 더 오래 기억하기 위해 만들어진 공간입니다. </SubTitle>
+          <LinkWrapper>
+            <ExternalLink href="https://github.com/nittre">🐙 github</ExternalLink>
+            <ExternalLink href="mailto:youjinlee1997@gmail.com">✉️ youjinlee1997@gmail.com</ExternalLink>
+          </LinkWrapper>
       </Wrapper>
     </Background>
   )
