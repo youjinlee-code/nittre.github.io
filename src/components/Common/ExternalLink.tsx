@@ -16,8 +16,8 @@ const LinkWrapper = styled.div`
 const ExternalLink: FunctionComponent = function () {
   return (
     <LinkWrapper>
-        <ELink href="https://github.com/nittre">🐙 github</ELink>
-        <ELink href="mailto:youjinlee1997@gmail.com">✉️ youjinlee1997@gmail.com</ELink>
+        <ELink href="https://github.com/nittre" target="_blank">🐙 github</ELink>
+        <ELink href="mailto:youjinlee1997@gmail.com" target="_blank">✉️ youjinlee1997@gmail.com</ELink>
     </LinkWrapper>    
   )
 }
