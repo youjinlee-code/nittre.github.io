@@ -1,8 +1,10 @@
 import React, { FunctionComponent } from 'react'
 import styled from '@emotion/styled'
+import TableOfContents from './TableOfContents'
 
 interface PostContentProps {
   html: string
+  tableOfContents: string
 }
 
 const MarkdownRenderer = styled.div`
@@ -13,6 +15,7 @@ width: 768px;
 margin: 0 auto;
 padding: 4em 0;
 word-break: break-all;
+
 
 // Markdown Style
 line-height: 1.8;
@@ -160,8 +163,16 @@ h3 + h4 {
 
 `
 
-const PostContent: FunctionComponent<PostContentProps> = function ({ html }) {
-  return <MarkdownRenderer dangerouslySetInnerHTML={{ __html: html }} />
+const PostToCWrapper = styled.div`
+  position: relative
+`
+
+const PostContent: FunctionComponent<PostContentProps> = function ({ html, tableOfContents }) {
+  return (<PostToCWrapper>
+      <MarkdownRenderer dangerouslySetInnerHTML={{ __html: html }} />
+      <TableOfContents html={tableOfContents} />
+  </PostToCWrapper>)
+  
 }
 
 export default PostContent

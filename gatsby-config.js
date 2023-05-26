@@ -69,6 +69,13 @@ module.exports = {
       resolve: `gatsby-transformer-remark`,
       options: {
         plugins: [
+          {
+            resolve: `gatsby-remark-autolink-headers`,
+            options: {
+              offsetY: 300,
+              elements: [`h1`, `h2`, `h3`],
+            },
+          },
           `gatsby-plugin-react-helmet`,
           {
             resolve: "gatsby-remark-smartypants",

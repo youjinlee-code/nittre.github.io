@@ -66,6 +66,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
               fields {
                 slug
               }
+              tableOfContents(pathToSlugField: "fields.slug", maxDepth: 3)
             }
             previous {
               id
@@ -107,6 +108,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   const generatePostPage = ({
     node: {
       fields: { slug },
+      tableOfContents,
     },
     previous,
     next,
@@ -114,7 +116,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     const pageOptions = {
       path: slug,
       component: PostTemplateComponent,
-      context: { slug, previous, next },
+      context: { slug, previous, next, tableOfContents },
     }
 
     createPage(pageOptions)

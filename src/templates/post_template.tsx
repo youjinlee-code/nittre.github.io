@@ -27,18 +27,22 @@ type PostTemplateProps = {
     pageContext:{
         previous: FooterArticle | null
         next: FooterArticle | null
+        tableOfContents: string
     }
   }
 
+
+
 const PostTemplate: FunctionComponent<PostTemplateProps> = function ({
-    data: {
-      allMarkdownRemark: { edges },
-    },
-    location: {href},
-    pageContext: {
-        previous, next
-    }
-  }) {
+  data: {
+    allMarkdownRemark: { edges },
+  },
+  location: {href},
+  pageContext: {
+      previous, next, tableOfContents
+  }
+}) {
+    
     const {
       node: {
         html,
@@ -53,18 +57,22 @@ const PostTemplate: FunctionComponent<PostTemplateProps> = function ({
     
     return (
       <Template title={title} description={summary} url={href}>
-        <PostHead
-          title={title}
-          date={date}
-          categories={categories}
-          summary={summary}
-        />
-        
-        <PostContent html={html} />
-        <PostFooter previous={previous} next={next} />
 
-        <CommentWidget />
+          <PostHead
+            title={title}
+            date={date}
+            categories={categories}
+            summary={summary}
+          />
+          
+          <PostContent html={html} tableOfContents={tableOfContents} />
+            
+          <PostFooter previous={previous} next={next} />
+
+          <CommentWidget />
         
+          
+
       </Template>
     )
   }
