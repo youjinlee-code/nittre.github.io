@@ -1,0 +1,222 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta name="generator" content="Gatsby 5.10.0"/><meta data-react-helmet="true" name="description" content="os, io, ioutil, bufio 패키지에 대해 가볍게 살펴보고, 각 패키지의 차이점을 확인합니다."/><meta data-react-helmet="true" name="viewport" content="width=device-width, initial-scale=1.0"/><meta data-react-helmet="true" http-equiv="Content-Type" content="text/html;charset=UTF-8"/><meta data-react-helmet="true" property="og:type" content="website"/><meta data-react-helmet="true" property="og:title" content="[Go] 파일 입출력 패키지 4종 정리(os, io, ioutil, bufio)"/><meta data-react-helmet="true" property="og:description" content="os, io, ioutil, bufio 패키지에 대해 가볍게 살펴보고, 각 패키지의 차이점을 확인합니다."/><meta data-react-helmet="true" property="og:url"/><meta data-react-helmet="true" property="og:site_name" content="[Go] 파일 입출력 패키지 4종 정리(os, io, ioutil, bufio)"/><meta data-react-helmet="true" name="twitter:card" content="summary"/><meta data-react-helmet="true" name="twitter:title" content="[Go] 파일 입출력 패키지 4종 정리(os, io, ioutil, bufio)"/><meta data-react-helmet="true" name="twitter:description" content="os, io, ioutil, bufio 패키지에 대해 가볍게 살펴보고, 각 패키지의 차이점을 확인합니다."/><meta data-react-helmet="true" name="twitter:site" content="@이유진"/><meta data-react-helmet="true" name="twitter:creator" content="@이유진"/><meta data-react-helmet="true" name="google-site-verification" content="d41Ck2f3LnP0_Xf45nyyVlR-LssnymFKygTi8QFqV7A"/><meta data-react-helmet="true" name="naver-site-verification" content="2e55aad8a4c9758a4d93c90e1d312cf42f650bdf"/><style data-href="/styles.b3622f1573c9b5a13a23.css" data-identity="gatsby-global-css">code[class*=language-],pre[class*=language-]{word-wrap:normal;background:none;color:#000;font-family:Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace;font-size:1em;-webkit-hyphens:none;hyphens:none;line-height:1.5;tab-size:4;text-align:left;text-shadow:0 1px #fff;white-space:pre;word-break:normal;word-spacing:normal}code[class*=language-] ::selection,code[class*=language-]::selection,pre[class*=language-] ::selection,pre[class*=language-]::selection{background:#b3d4fc;text-shadow:none}@media print{code[class*=language-],pre[class*=language-]{text-shadow:none}}pre[class*=language-]{margin:.5em 0;overflow:auto;padding:1em}:not(pre)>code[class*=language-],pre[class*=language-]{background:#f5f2f0}:not(pre)>code[class*=language-]{border-radius:.3em;padding:.1em;white-space:normal}.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#708090}.token.punctuation{color:#999}.token.namespace{opacity:.7}.token.boolean,.token.constant,.token.deleted,.token.number,.token.property,.token.symbol,.token.tag{color:#905}.token.attr-name,.token.builtin,.token.char,.token.inserted,.token.selector,.token.string{color:#690}.language-css .token.string,.style .token.string,.token.entity,.token.operator,.token.url{background:hsla(0,0%,100%,.5);color:#9a6e3a}.token.atrule,.token.attr-value,.token.keyword{color:#07a}.token.class-name,.token.function{color:#dd4a68}.token.important,.token.regex,.token.variable{color:#e90}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}</style><style>.gatsby-image-wrapper{position:relative;overflow:hidden}.gatsby-image-wrapper picture.object-fit-polyfill{position:static!important}.gatsby-image-wrapper img{bottom:0;height:100%;left:0;margin:0;max-width:none;padding:0;position:absolute;right:0;top:0;width:100%;object-fit:cover}.gatsby-image-wrapper [data-main-image]{opacity:0;transform:translateZ(0);transition:opacity .25s linear;will-change:opacity}.gatsby-image-wrapper-constrained{display:inline-block;vertical-align:top}</style><noscript><style>.gatsby-image-wrapper noscript [data-main-image]{opacity:1!important}.gatsby-image-wrapper [data-placeholder-image]{opacity:0!important}</style></noscript><script type="module">const e="undefined"!=typeof HTMLImageElement&&"loading"in HTMLImageElement.prototype;e&&document.body.addEventListener("load",(function(e){const t=e.target;if(void 0===t.dataset.mainImage)return;if(void 0===t.dataset.gatsbyImageSsr)return;let a=null,n=t;for(;null===a&&n;)void 0!==n.parentNode.dataset.gatsbyImageWrapper&&(a=n.parentNode),n=n.parentNode;const o=a.querySelector("[data-placeholder-image]"),r=new Image;r.src=t.currentSrc,r.decode().catch((()=>{})).then((()=>{t.style.opacity=1,o&&(o.style.opacity=0,o.style.transition="opacity 500ms linear")}))}),!0);</script><link rel="canonical" href="https://nittre.github.io/golang-file-io/" data-baseprotocol="https:" data-basehost="nittre.github.io"/><link rel="sitemap" type="application/xml" href="/sitemap-index.xml"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><style data-emotion="css zyllbl">.css-zyllbl{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;height:100vh;}</style><main class="css-zyllbl e1strnqo0"><style data-emotion="css 13jjfor">.css-13jjfor{z-index:1000;position:fixed;top:0px;left:0px;right:0px;padding:0px 42px;height:3em;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-align:center;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-webkit-box-pack:justify;-webkit-justify-content:space-between;justify-content:space-between;background-color:#ffffffbb;font-size:1.2em;font-weight:600;}@media (max-width: 768px){.css-13jjfor{font-size:1em;padding:0px 21px;}}</style><div class="css-13jjfor e15l4yeg2"><style data-emotion="css 9gures">.css-9gures:hover{color:#6AB767;}</style><a class="css-9gures e15l4yeg1" href="/">🌿 nittre.github.io</a><style data-emotion="css yyqak6">.css-yyqak6{font-size:1.2em;font-weight:600;}@media (max-width: 768px){.css-yyqak6{font-size:1em;}}.css-yyqak6:hover{color:#6AB767;}</style><a class="css-yyqak6 e15l4yeg0" href="/info/">👋</a></div><style data-emotion="css-global 1prx4uc">*{padding:0;margin:0;box-sizing:border-box;font-family:Pretendard Variable,Apple SD Gothic Neo,Nanum Barun Gothic,Nanum Gothic,Verdana,Arial,Malgun Gothic,Dotum,sans-serif;font-size:1em;}html,body,#___gatsby{height:100%;color:rgb(52,58,64);}a,a:hover{color:inherit;-webkit-text-decoration:none;text-decoration:none;cursor:pointer;}</style><style data-emotion="css 16cz9yp">.css-16cz9yp{position:relative;width:100%;height:400px;}@media (max-width: 768px){.css-16cz9yp{height:300px;}}</style><div class="css-16cz9yp e1opi4mu0"><style data-emotion="css 1509qcf">.css-1509qcf{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;width:768px;height:100%;margin:6em auto 0 auto;}@media (max-width: 768px){.css-1509qcf{width:100%;padding:1em 1em;margin:4em auto 0 auto;}}</style><div class="css-1509qcf e1st1jau3"><style data-emotion="css 5l6g7r">.css-5l6g7r{display:-webkit-box;overflow:hidden;overflow-wrap:break-word;margin-bottom:0.25em;text-overflow:ellipsis;white-space:normal;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-size:2.4em;font-weight:800;}@media (max-width: 768px){.css-5l6g7r{font-size:30px;}}</style><div class="css-5l6g7r e1st1jau2">[Go] 파일 입출력 패키지 4종 정리(os, io, ioutil, bufio)</div><div>os, io, ioutil, bufio 패키지에 대해 가볍게 살펴보고, 각 패키지의 차이점을 확인합니다.</div><style data-emotion="css lbbxfs">.css-lbbxfs{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;margin-top:10px;font-size:0.9em;font-weight:400;}.css-lbbxfs>div{margin-right:1em;margin-bottom:0.25em;}</style><div class="css-lbbxfs e1st1jau1"><div>2023-05-26</div><div><style data-emotion="css 1sv2bsr">.css-1sv2bsr{margin-right:0.5em;-webkit-text-decoration:underline;text-decoration:underline;cursor:pointer;}.css-1sv2bsr:last-of-type{margin-right:0;}.css-1sv2bsr:hover{color:#6AB767;-webkit-text-decoration:underline;text-decoration:underline;}</style><a class="css-1sv2bsr e1st1jau0" href="/?category=Golang">#<!-- -->Golang</a></div></div></div></div><style data-emotion="css 1e4pf8u">.css-1e4pf8u{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;width:768px;margin:0 auto;padding:4em 0;word-break:break-all;line-height:1.8;font-size:16px;font-weight:400;}.css-1e4pf8u p{padding:3px 0;}.css-1e4pf8u h1,.css-1e4pf8u h2,.css-1e4pf8u h3{font-weight:700;margin-bottom:0.5em;}.css-1e4pf8u *+h1,.css-1e4pf8u *+h2{margin-top:3em;}.css-1e4pf8u *+h3{margin-top:3em;}.css-1e4pf8u *+h4{margin-top:0.8em;}.css-1e4pf8u hr+h1,.css-1e4pf8u hr+h2,.css-1e4pf8u hr+h3{margin-top:0;}.css-1e4pf8u h1+h2,.css-1e4pf8u h2+h3,.css-1e4pf8u h3+h4{margin-top:0;}.css-1e4pf8u h1{font-size:2em;}.css-1e4pf8u h2{font-size:1.7em;}.css-1e4pf8u h3{font-size:1.4em;}.css-1e4pf8u h4{font-size:1.1em;}.css-1e4pf8u blockquote{margin:1em 0;padding:5px 15px;border-left:2px solid #000000;}.css-1e4pf8u ol,.css-1e4pf8u ul{margin-left:1em;padding:0.1em 0;}.css-1e4pf8u hr{border:1px solid #000000;margin:100px 0;}.css-1e4pf8u a{color:#4263eb;-webkit-text-decoration:underline;text-decoration:underline;}.css-1e4pf8u pre[class*='language-']{margin:1em 0 2em 0;font-size:0.9em;padding:1em 1.5em;}.css-1e4pf8u pre[class*='language-']::-webkit-scrollbar-thumb{background:rgba(255, 255, 255, 0.5);border-radius:1px;}.css-1e4pf8u code[class*='language-'],.css-1e4pf8u pre[class*='language-']{border-radius:0.5em;}.css-1e4pf8u code[class='language-text']{padding:0.2em 0.4em 0.2em 0.5em;font-size:0.9em;margin-right:1px;color:#DD4A68;}.css-1e4pf8u h2>code[class='language-text'],.css-1e4pf8u h3>code[class='language-text']{font-size:0.8em;}@media (max-width: 768px){.css-1e4pf8u{width:100%;padding:2em 1em;line-height:1.6;font-size:1em;}.css-1e4pf8u h1{font-size:23px;}.css-1e4pf8u h2{font-size:20px;}.css-1e4pf8u h3{font-size:17px;}.css-1e4pf8u img{width:100%;}.css-1e4pf8u hr{margin:50px 0;}}</style><div class="css-1e4pf8u e1ijh0y10"><h2>파일 시스템 패키지 - <code class="language-text">os</code>, <code class="language-text">io</code>, <code class="language-text">ioutil</code>, <code class="language-text">bufio</code></h2>
+<p>Go언어어는 파일 I/O와 관련된 다양한 패키지들이 있다. 무려 네 가지나 있는 바람에 한번 짚고 넘어가면 좋을 것 같아 정리해둔다.</p>
+<p>주요 패키지는 아래와 같다.</p>
+<br/>
+<ul>
+<li><code class="language-text">os</code> 패키지: 운영체제와 상호작용하는 패키지로, 파일을 열고, 생성하고, 삭제하는 등의 파일 시스템 작업을 수행한다.</li>
+<li><code class="language-text">io</code> 패키지: 파일 입출력 연산을 위한 인터페이스를 제공한다.</li>
+<li><code class="language-text">ioutil</code> 패키지: 파일 작업을 편리하게 처리하기 위한 유틸리티 함수를 제공한다.</li>
+<li><code class="language-text">bufio</code> 패키지: I/O 작업 시 버퍼 방식을 사용할 수 있도록 함수를 제공한다.</li>
+</ul>
+<h3><code class="language-text">os</code> 패키지</h3>
+<blockquote>
+<p>Package os provides a platform-independent interface to operating system functionality.</p>
+<p>os 패키지는 운영체제 기능에 대한 플랫폼 독립적인 인터페이스를 제공한다.</p>
+</blockquote>
+<p>다음과 같이 파일을 열 수 있다.</p>
+<div class="gatsby-highlight" data-language="go"><pre class="language-go"><code class="language-go">file<span class="token punctuation">,</span> err <span class="token operator">:=</span> os<span class="token punctuation">.</span><span class="token function">Open</span><span class="token punctuation">(</span><span class="token string">"file.go"</span><span class="token punctuation">)</span> <span class="token comment">// For read access.</span>
+
+<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+	log<span class="token punctuation">.</span><span class="token function">Fatal</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre></div>
+<p><code class="language-text">os.Open()</code>으로 파일을 열면, 바이트 조각 단위로 파일 데이터를 읽을 수 있다. 읽기 및 쓰기 작업 시, 인자로 주어진 슬라이스의 길이만큼 작업한다. (예를 들어, 슬라이스의 길이가 100이면 100byte만 읽는다.)</p>
+<div class="gatsby-highlight" data-language="go"><pre class="language-go"><code class="language-go">data <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span> <span class="token comment">// 읽어들인 파일 데이터를 저장하는 공간</span>
+count<span class="token punctuation">,</span> err <span class="token operator">:=</span> file<span class="token punctuation">.</span><span class="token function">Read</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span> <span class="token comment">// 읽어들인 파일 데이터의 길이를 반환한다</span>
+<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+	log<span class="token punctuation">.</span><span class="token function">Fatal</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"read %d bytes: %q\n"</span><span class="token punctuation">,</span> count<span class="token punctuation">,</span> data<span class="token punctuation">[</span><span class="token punctuation">:</span>count<span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre></div>
+<p>그 외에도 <code class="language-text">Create</code>, <code class="language-text">Remove</code> 등의 함수를 사용해 파일을 다룰 수 있다.</p>
+<h3><code class="language-text">io</code> 패키지</h3>
+<blockquote>
+<p>Package io provides basic interfaces to I/O primitives. Its primary job is to wrap existing implementations of such primitives, such as those in package os, into shared public interfaces that abstract the functionality, plus some other related primitives.</p>
+<p>io 패키지는 I/O Primitives에 대한 기본 인터페이스를 제공한다. io 패키지는 주로 (os 패키지에 있는 것과 같이) primitives들의 구현체를 공용 퍼블릭 인터페이스와 다른 관련된 primitives로 감싸 기능을 추상화하는 것이다.</p>
+</blockquote>
+<br/>
+<ul>
+<li>파일 입출력과 관련된 인터페이스와 함수를 제공하는 패키지</li>
+<li>io 패키지의 함수와 메서드를 사용해 데이터를 읽고 쓰는 작업을 수행할 수 있다.</li>
+<li>파일 입출력에 사용되는 일반적인 인터페이스인 <code class="language-text">io.Reader</code>와 <code class="language-text">io.Writer</code>를 정의한다.
+<ul>
+<li>다른 패키지들은 io 패키지에 정의된 인터페이스를 구현하여 표준화된 입출력 작업을 수행한다.</li>
+</ul>
+</li>
+</ul>
+<br/>
+<p>예시 - <code class="language-text">io.ReadFull</code></p>
+<div class="gatsby-highlight" data-language="go"><pre class="language-go"><code class="language-go">file<span class="token punctuation">,</span> err <span class="token operator">:=</span> os<span class="token punctuation">.</span><span class="token function">Open</span><span class="token punctuation">(</span><span class="token string">"res.txt"</span><span class="token punctuation">)</span>
+
+byteSlice <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">,</span> <span class="token number">245</span><span class="token punctuation">)</span>
+numBytesRead<span class="token punctuation">,</span> err <span class="token operator">:=</span> io<span class="token punctuation">.</span><span class="token function">ReadFull</span><span class="token punctuation">(</span>file<span class="token punctuation">,</span> byteSlice<span class="token punctuation">)</span> <span class="token comment">// file에서 len(byteSlice)만큼만 읽어들여서 byteSlice에 저장</span>
+<span class="token keyword">if</span> err <span class="token operator">==</span> io<span class="token punctuation">.</span>EOF <span class="token punctuation">{</span>
+    fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+    <span class="token function">panic</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+log<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"io - Number of Bytes Read: %d\n"</span><span class="token punctuation">,</span> numBytesRead<span class="token punctuation">)</span>
+log<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"Data Read: %s\n"</span><span class="token punctuation">,</span> byteSlice<span class="token punctuation">)</span></code></pre></div>
+<h3><code class="language-text">ioutil</code> 패키지</h3>
+<blockquote>
+<p>Package ioutil implements some I/O utility functions.</p>
+<p>ioutil 패키지는 I/O 유틸리티 함수를 구현한다.</p>
+</blockquote>
+<blockquote>
+<p>Deprecated: As of Go 1.16, the same functionality is now provided by package io or package os, and those implementations should be preferred in new code.</p>
+<p>Deprecated: Go 1.16부터, 동일한 기능은 io 패키지와 os 패키지에서 제공하며, 새롭게 코드를 작성할 때는 두 패키지를 사용하는 것을 권장한다.</p>
+</blockquote>
+<br/>
+<ul>
+<li>I/O 작업을 편리하게 처리하기 위한 유틸리티 함수를 제공한다.
+<ul>
+<li>예를 들어, ReadFile, WriteFile 함수를 통해 파일 내용을 한번에 읽거나 쓸 수 있다.</li>
+</ul>
+</li>
+<li>그러나 1.16 버전부터 deprecated 되었으며, 기존 ioutil 함수들은 os 패키지와 io 패키지에 구현되었다.</li>
+</ul>
+<br/>
+<p>예시 - ioutil.ReadFile (파일을 열고 한꺼번에 읽는다.)</p>
+<div class="gatsby-highlight" data-language="go"><pre class="language-go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">readByIoutil</span><span class="token punctuation">(</span>filename <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	data<span class="token punctuation">,</span> err <span class="token operator">:=</span> ioutil<span class="token punctuation">.</span><span class="token function">ReadFile</span><span class="token punctuation">(</span>filename<span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		log<span class="token punctuation">.</span><span class="token function">Panicf</span><span class="token punctuation">(</span><span class="token string">"failed reading data from file: %s"</span><span class="token punctuation">,</span> err<span class="token punctuation">)</span>
+	<span class="token punctuation">}</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"\nSize: %d bytes"</span><span class="token punctuation">,</span> <span class="token function">len</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span>
+	fmt<span class="token punctuation">.</span><span class="token function">Printf</span><span class="token punctuation">(</span><span class="token string">"\nData: %s"</span><span class="token punctuation">,</span> data<span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre></div>
+<p>ioutil 패키지의 ReadFile 함수 구현 모습을 보면, 실제로 <code class="language-text">os.ReadFile()</code>을 내부적으로 호출하는 것을 볼 수 있다.</p>
+<div class="gatsby-highlight" data-language="go"><pre class="language-go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">ReadFile</span><span class="token punctuation">(</span>filename <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">,</span> <span class="token builtin">error</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">return</span> os<span class="token punctuation">.</span><span class="token function">ReadFile</span><span class="token punctuation">(</span>filename<span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre></div>
+<h3><code class="language-text">bufio</code> 패키지</h3>
+<blockquote>
+<p>Package bufio implements buffered I/O. It wraps an io.Reader or io.Writer object, creating another object (Reader or Writer) that also implements the interface but provides buffering and some help for textual I/O.</p>
+<p>bufio 패키지는 버퍼링된 I/O를 구현한다. io.Reader와 io.Writer 인터페이스를 래핑하여 Reader, Writer 객체를 만들고, 버퍼 및 텍스트 I/O와 관련된 기능을 제공한다.</p>
+</blockquote>
+<br/>
+<ul>
+<li>bufio는 버퍼 방식을 사용해, 청크 단위로 I/O 작업을 하는 과정에서 발생하는 오버헤드를 줄여 성능을 향상시킨다.
+<ul>
+<li>따라서, 파일 크기가 크거나, 데이터 양이 많은 경우 유용하다.</li>
+</ul>
+</li>
+<li><code class="language-text">bufio.Reader</code>와 <code class="language-text">bufio.Writer</code> 타입을 사용해 입출력 작업을 처리한다.</li>
+</ul>
+<br/>
+<p>실제로, <code class="language-text">bufio.Reader</code> 구조체는 다음과 같다.</p>
+<div class="gatsby-highlight" data-language="go"><pre class="language-go"><code class="language-go"><span class="token keyword">type</span> Reader <span class="token keyword">struct</span> <span class="token punctuation">{</span>
+	buf          <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span>
+	rd           io<span class="token punctuation">.</span>Reader <span class="token comment">// reader provided by the client</span>
+	r<span class="token punctuation">,</span> w         <span class="token builtin">int</span>       <span class="token comment">// buf read and write positions</span>
+	err          <span class="token builtin">error</span>
+	lastByte     <span class="token builtin">int</span> <span class="token comment">// last byte read for UnreadByte; -1 means invalid</span>
+	lastRuneSize <span class="token builtin">int</span> <span class="token comment">// size of last rune read for UnreadRune; -1 means invalid</span>
+<span class="token punctuation">}</span></code></pre></div>
+<p>클라이언트로부터 reader를 받을 때, <code class="language-text">io.Reader</code> 인터페이스를 구현한 reader 객체를 받는다.</p>
+<div class="gatsby-highlight" data-language="go"><pre class="language-go"><code class="language-go"><span class="token comment">// bufio.NewReader()</span>
+<span class="token keyword">func</span> <span class="token function">NewReader</span><span class="token punctuation">(</span>rd io<span class="token punctuation">.</span>Reader<span class="token punctuation">)</span> <span class="token operator">*</span>Reader <span class="token punctuation">{</span>
+	<span class="token keyword">return</span> <span class="token function">NewReaderSize</span><span class="token punctuation">(</span>rd<span class="token punctuation">,</span> defaultBufSize<span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre></div>
+<p>bufio 패키지를 사용해 아래와 같이 read, write 작업을 수행할 수 있다.</p>
+<div class="gatsby-highlight" data-language="go"><pre class="language-go"><code class="language-go"><span class="token keyword">func</span> <span class="token function">ReadWriteByBufio</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	fi<span class="token punctuation">,</span> err <span class="token operator">:=</span> os<span class="token punctuation">.</span><span class="token function">Open</span><span class="token punctuation">(</span><span class="token string">"res.txt"</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		<span class="token function">panic</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">defer</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">if</span> err <span class="token operator">:=</span> fi<span class="token punctuation">.</span><span class="token function">Close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+			<span class="token function">panic</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+	<span class="token comment">// read buffer 만들기</span>
+	r <span class="token operator">:=</span> bufio<span class="token punctuation">.</span><span class="token function">NewReader</span><span class="token punctuation">(</span>fi<span class="token punctuation">)</span>
+
+	<span class="token comment">// Output 파일 만들기</span>
+	fo<span class="token punctuation">,</span> err <span class="token operator">:=</span> os<span class="token punctuation">.</span><span class="token function">Create</span><span class="token punctuation">(</span><span class="token string">"output.txt"</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		<span class="token function">panic</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">defer</span> <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">if</span> err <span class="token operator">:=</span> fo<span class="token punctuation">.</span><span class="token function">Close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+			<span class="token function">panic</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+	<span class="token comment">// write buffer 만들기</span>
+	w <span class="token operator">:=</span> bufio<span class="token punctuation">.</span><span class="token function">NewWriter</span><span class="token punctuation">(</span>fo<span class="token punctuation">)</span>
+
+	buf <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">byte</span><span class="token punctuation">,</span> <span class="token number">64</span><span class="token punctuation">)</span>
+	<span class="token keyword">for</span> <span class="token punctuation">{</span> <span class="token comment">// 무한루프</span>
+		<span class="token comment">// read a chunk</span>
+
+		<span class="token comment">// 1. 입력 파일에서 데이터를 읽어와 buf에 저장한다.</span>
+		<span class="token comment">//    읽은 바이트 수를 n에 할당한다</span>
+		n<span class="token punctuation">,</span> err <span class="token operator">:=</span> r<span class="token punctuation">.</span><span class="token function">Read</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span>
+
+		<span class="token comment">// 2. 읽기 과정에서 에러 생긴 경우 &amp;&amp; 오류가 파일의 끝(io.EOF)이 아닌 경우 패닉</span>
+		<span class="token keyword">if</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token operator">&amp;&amp;</span> err <span class="token operator">!=</span> io<span class="token punctuation">.</span>EOF <span class="token punctuation">{</span>
+			<span class="token function">panic</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+		<span class="token punctuation">}</span>
+
+		<span class="token comment">// 3. 읽은 바이트 수가 0, 즉 더 이상 읽을 게 없는 경우(=파일의 끝인 경우) 무한루프 종료</span>
+		<span class="token keyword">if</span> n <span class="token operator">==</span> <span class="token number">0</span> <span class="token punctuation">{</span>
+			<span class="token keyword">break</span>
+		<span class="token punctuation">}</span>
+
+		<span class="token comment">// 4. 읽은 데이터(buf)를 출력 파일에 쓴다</span>
+		<span class="token comment">//    중간에 에러 나면 패닉처리</span>
+		<span class="token keyword">if</span> <span class="token boolean">_</span><span class="token punctuation">,</span> err <span class="token operator">:=</span> w<span class="token punctuation">.</span><span class="token function">Write</span><span class="token punctuation">(</span>buf<span class="token punctuation">[</span><span class="token punctuation">:</span>n<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+			<span class="token function">panic</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+	<span class="token comment">// 5. w.Flush() = io.Writer에 남은 버퍼 데이터를 강제로 파일에 씀</span>
+	<span class="token keyword">if</span> err <span class="token operator">=</span> w<span class="token punctuation">.</span><span class="token function">Flush</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> err <span class="token operator">!=</span> <span class="token boolean">nil</span> <span class="token punctuation">{</span>
+		<span class="token function">panic</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre></div>
+<h2>정리</h2>
+<p>os, io, ioutil, bufio 패키지 각각이 유사한 작업들을 수행하기 때문에, 각 패키지가 무슨 역할을 집중적으로 수행하는지 구별할 필요가 있다.</p>
+<br/>
+<ul>
+<li><code class="language-text">os</code>
+<ul>
+<li><strong>파일 시스템</strong> 작업에 집중 (파일 생성, 수정, 삭제)</li>
+<li>운영체제와 밀접한 관련이 있는 작업(e.g. 파일시스템)</li>
+</ul>
+</li>
+<li><code class="language-text">io</code>
+<ul>
+<li>파일 입출력을 위한 <strong>인터페이스</strong>를 제공</li>
+<li>파일 입출력과 관련된 기본적인 함수(구현체)를 제공</li>
+</ul>
+</li>
+<li><code class="language-text">ioutil</code>
+<ul>
+<li>파일 입출력과 관련된 여러 기능을 제공했지만, deprecated</li>
+<li>ioutil 패키지의 기능들은 io, os 패키지에 흡수되었다.</li>
+</ul>
+</li>
+<li><code class="language-text">bufio</code>
+<ul>
+<li>버퍼 방식으로 파일 입출력을 할수 있게 해준다.</li>
+<li>성능 굿!!</li>
+</ul>
+</li>
+</ul>
+<h2>무엇을 써야할까?</h2>
+<p>정답은 없다.</p>
+<ul>
+<li>os.Open() 후 io.ReadFull()을 써도 되고,</li>
+<li>os.ReadFile()을 써도 되고,</li>
+<li>os.Open() 후 bufio.NewReader()와 bufio.Read()를 써도 된다.</li>
+</ul>
+<p>다만 나라면 파일 입출력이 필요할 때는 <strong>bufio 패키지</strong>를 적극적으로 사용할 것 같다.</p>
+<p>파일 입출력은 디스크라는 물리적인 공간을 방문하는 행위이기 때문에 성능이 중요하고, 따라서 버퍼 방식으로 처리해 조금이라도 방문 횟수를 줄이는 것이 좋을 것 같다.</p></div><style data-emotion="css 1mhg4js">.css-1mhg4js{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;margin-bottom:40px;position:relative;box-sizing:border-box;width:100%;max-width:768px;margin-left:auto;margin-right:auto;}@media screen and (max-width: 768px){.css-1mhg4js{-webkit-box-flex-wrap:wrap;-webkit-flex-wrap:wrap;-ms-flex-wrap:wrap;flex-wrap:wrap;}}</style><div class="css-1mhg4js e25qew83"><style data-emotion="css 1yosuc1">.css-1yosuc1{-webkit-flex:1 1 50%;-ms-flex:1 1 50%;flex:1 1 50%;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;padding:12px;border-radius:6px;border:1px solid #eaebec;-webkit-text-decoration:none;text-decoration:none;}.css-1yosuc1:first-child{margin-right:8px;}.css-1yosuc1:last-child{margin-left:8px;text-align:right;}.css-1yosuc1:first-child:last-child{margin:0;}@media screen and (max-width: 768px){.css-1yosuc1{-webkit-flex-basis:100%;-ms-flex-preferred-size:100%;flex-basis:100%;}.css-1yosuc1:first-child,.css-1yosuc1:last-child{margin:6px 1em;}}</style><a class="css-1yosuc1 e25qew82" href="/utxo/"><style data-emotion="css 127sw7r">.css-127sw7r{font-size:0.825em;margin-bottom:8px;}</style><div class="css-127sw7r e25qew81">다음 글</div><strong class="css-0 e25qew80">UTXO의 동작원리</strong></a></div><style data-emotion="css hx9xpc">@media (max-width: 768px){.css-hx9xpc{padding:0 20px;}}</style><div class="css-hx9xpc e1gqsjds0"></div><style data-emotion="css 4rh9hc">.css-4rh9hc{display:grid;place-items:center;margin-top:auto;padding:50px 0;font-size:1em;text-align:center;}@media (max-width: 768px){.css-4rh9hc{font-size:13px;}}</style><footer class="css-4rh9hc e1oae0v80"><style data-emotion="css zjik7">.css-zjik7{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;}</style><div class="css-zjik7 e1ubbk500"><style data-emotion="css av4fav">.css-av4fav{font-size:0.8rem;-webkit-text-decoration:underline;text-decoration:underline;margin-right:0.5em;}</style><a href="https://github.com/nittre" target="_blank" class="css-av4fav e1ubbk501">🐙 github</a><a href="mailto:youjinlee1997@gmail.com" target="_blank" class="css-av4fav e1ubbk501">✉️ youjinlee1997@gmail.com</a></div><br/>© 2023 유진, Powered By Gatsby.</footer></main></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/golang-file-io/";/*]]>*/</script><!-- slice-start id="_gatsby-scripts-1" -->
+          <script
+            id="gatsby-chunk-mapping"
+          >
+            window.___chunkMapping="{\"app\":[\"/app-b5073e3230a566418316.js\"],\"component---src-pages-404-tsx\":[\"/component---src-pages-404-tsx-25b7fb134a8d4af4b068.js\"],\"component---src-pages-index-tsx\":[\"/component---src-pages-index-tsx-10c1e0f04a356ccb9a0d.js\"],\"component---src-pages-info-tsx\":[\"/component---src-pages-info-tsx-dadc1bf5c2bddb9d52ea.js\"],\"component---src-templates-post-template-tsx\":[\"/component---src-templates-post-template-tsx-c94d43d69ef636fddc3b.js\"]}";
+          </script>
+        <script>window.___webpackCompilationHash="c81c6dd5530225c76b3d";</script><script src="/webpack-runtime-19392b6c946004e121c3.js" async></script><script src="/framework-6a525285796fb83f2864.js" async></script><script src="/app-b5073e3230a566418316.js" async></script><!-- slice-end id="_gatsby-scripts-1" --></body></html>
