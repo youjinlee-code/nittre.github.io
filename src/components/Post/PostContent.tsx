@@ -34,10 +34,10 @@ h3 {
 
 * + h1,
 * + h2 {
-  margin-top: 1.2em;
+  margin-top: 3em;
 }
 * + h3 {
-  margin-top: 1.2em;
+  margin-top: 3em;
 }
 * + h4 {
   margin-top: 0.8em;
@@ -74,7 +74,7 @@ h3 + h4 {
 
   // Adjust Quotation Element Style
   blockquote {
-    margin: 30px 0;
+    margin: 1em 0;
     padding: 5px 15px;
     border-left: 2px solid #000000;
   }
@@ -82,8 +82,8 @@ h3 + h4 {
   // Adjust List Element Style
   ol,
   ul {
-    margin-left: 20px;
-    padding: 30px 0;
+    margin-left: 1em;
+    padding: 0.1em 0;
   }
 
   // Adjust Horizontal Rule style
@@ -100,22 +100,36 @@ h3 + h4 {
 
   // Adjust Code Style
   pre[class*='language-'] {
-    margin: 30px 0;
-    padding: 1.5em;
-    font-size: 15px;
+    margin: 1em 0 2em 0;
+    font-size: 0.9em;
+    padding: 1em 1.5em;
 
     ::-webkit-scrollbar-thumb {
       background: rgba(255, 255, 255, 0.5);
-      border-radius: 3px;
+      border-radius: 1px;
     }
   }
 
   code[class*='language-'],
   pre[class*='language-'] {
-    tab-size: 2;
-    border-radius: 1em;
+    // tab-size: 2;
+    border-radius: 0.5em;
+    // padding: 1em;
    
   }
+
+  code[class='language-text'] {
+    padding: 0.2em 0.4em 0.2em 0.5em;
+    font-size: 0.9em;
+    margin-right: 1px;
+    color: #DD4A68;
+  }
+
+  h2 > code[class='language-text'],
+  h3 > code[class='language-text'] {
+    font-size: 0.8em;
+  }
+
   // Markdown Responsive Design
   @media (max-width: 768px) {
     width: 100%;
